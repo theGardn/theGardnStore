@@ -6,7 +6,7 @@ const Category = db.define('category', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  category: {
+  imageUrl: {
     type: Sequelize.STRING,
     allowNull: false
   }
