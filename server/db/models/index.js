@@ -1,7 +1,7 @@
 const User = require('./user')
 const Product = require('./product')
 const Category = require('./category')
-const Order_Detail = require('./order_detail')
+const Order_Detail = require('./orderDetails')
 const Order = require('./order')
 
 Product.belongsTo(Category)
