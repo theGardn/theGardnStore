@@ -16,12 +16,12 @@ install:
 before_script:
   - psql -c 'create database "theGardn";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: gardn # see README
+  api_key:
+    secure: CBjIYgpQxZZpWmbuqeHyL3tqyR2XPLKh0e9fKlZSd3BzNJIzgs/RXtn2ceGb6PvBRQZyM/r/V+LVJ0vi5NGFE2zC6nq03tBcR37fSXjltqcEIObFbGNHSGuNdSwd8OmTfBm0iVh0bm/9wWQD5be67phpbv13/9Fx8Qzn4qUYfWwWCT5pplHJ5KzlQ2sxGESgJfJ/a9aKrZMRMUDxy2JtQcuskVV1+zoCFoa7r6kFTKqCGOgDcnoMCdLBXO7vyG0aWAQEKMO/PPP1MiLBS35ZwVjlJL8UfVDoKEicxVBVNFs4luGQPhs4s6SnAHVfFfaza7JZNtNHg2dWFcfvTLHczcynTVdZUkHQgcc+kHXMaJSQeXPNEuOrxmVWSfGfAXpHZ9Uq9LSX5RF9J1wecZIEwoh964WzSqqaZSVRJT4ur72fy3mvpkTaVi8xqDsTRfXvekTJTY8FvBJ83E1nHQ/p0GaPfVb1PI7UOM1Eneae2n4jqr3uPCcebfbyf0KTsR7+vK4gLVXgBHcBgzTZbp0xZg5xObUUvMioQ4a2C1Z4x4S2jqb3uy840jpIa23oxpz1VT130PXWQ/QIXXgLjtjn3dWKq6xyIo8Ld5BTNM5rN+XWYkH2F24MH1ZgQvtJseSrvgMw0CzNLTFApaHi3NGmB2qLLNZJPZWdCmWau81iUtA= # see README
