@@ -10,6 +10,7 @@ const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART'
 const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
+const CLEAR_CART = 'CLEAR_CART'
 
 const IS_LOADING = 'IS_LOADING'
 const LOADING_FINISH = 'LOADING_FINISH'
@@ -42,6 +43,7 @@ const getOrderHistory = orderHistory => ({
 })
 const isLoading = () => ({type: IS_LOADING})
 const loadingFinish = () => ({type: LOADING_FINISH})
+const clearCart = () => ({type: CLEAR_CART})
 
 /**
  * THUNK CREATORS
@@ -69,6 +71,7 @@ export const auth = (email, password, method) => async dispatch => {
   }
 
   try {
+    dispatch(clearCart())
     dispatch(getUser(res.data))
     history.push('/home')
     dispatch(loadingFinish())
@@ -84,6 +87,7 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
+    dispatch(clearCart())
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -91,11 +95,11 @@ export const logout = () => async dispatch => {
   }
 }
 
-export const addItemToCartThunk = (item, quantity) => async dispatch => {
+export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.post('/api/cart', newItem)
+    const res = await axios.post('/api/cart', {item: newItem, userId: user.id})
     dispatch(addItemToCart(newItem))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -111,11 +115,15 @@ export const addItemToCartThunk = (item, quantity) => async dispatch => {
   }
 }
 
-export const updateItemInCartThunk = (item, quantity) => async dispatch => {
+export const updateItemInCartThunk = (
+  item,
+  quantity,
+  user
+) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.put('/api/cart', newItem)
+    const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
     dispatch(updateItemInCart(res.data))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -131,10 +139,10 @@ export const updateItemInCartThunk = (item, quantity) => async dispatch => {
   }
 }
 
-export const removeItemFromCartThunk = item => async dispatch => {
+export const removeItemFromCartThunk = (item, user) => async dispatch => {
   try {
     dispatch(isLoading())
-    const res = await axios.delete('/api/cart', item)
+    const res = await axios.delete('/api/cart', {item: item, userId: user.id})
     dispatch(removeItemFromCart(item))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -150,13 +158,40 @@ export const removeItemFromCartThunk = item => async dispatch => {
   }
 }
 
+// post '/api/checkout'  for guest
+// put '/api/checkout'
+export const submitCheckoutThunk = user => async dispatch => {
+  try {
+    dispatch(isLoading())
+    let res
+    if (user) {
+      res = await axios.put('/api/checkout', {userId: user.id})
+    } else {
+      let localCart = JSON.parse(localStorage.getItem(garden_store))
+      if (localCart) {
+        res = await axios.post('/api/checkout', {
+          item: localCart,
+          userId: user.id
+        })
+      }
+    }
+    dispatch(clearCart())
+    localStorage.clear(garden_store)
+    dispatch(loadingFinish())
+  } catch (err) {
+    console.error(err)
+    dispatch(loadingFinish())
+  }
+}
+
 export const getOrderHistoryThunk = orderId => async dispatch => {
   try {
     dispatch(isLoading())
+    let res
     if (orderId) {
-      const res = await axios.get(`/oder/${orderId}`)
+      res = await axios.get(`/oder/${orderId}`)
     } else {
-      const res = await axios.get('/oder')
+      res = await axios.get('/oder')
     }
     dispatch(getOrderHistory(res.data))
     dispatch(loadingFinish())
@@ -170,6 +205,7 @@ export const getOrderHistoryThunk = orderId => async dispatch => {
  * REDUCER
  */
 export default function(state = defaultUser, action) {
+  let newCart
   switch (action.type) {
     case IS_LOADING:
       return {...state, isLoading: true}
@@ -182,12 +218,12 @@ export default function(state = defaultUser, action) {
     case ADD_ITEM_TO_CART:
       return {...state, cart: [...cart, action.item]}
     case REMOVE_ITEM_FROM_CART:
-      let newCart = cart.filter(item => {
+      newCart = cart.filter(item => {
         return item.id != action.item.id
       })
       return {...state, cart: newCart}
     case UPDATE_ITEM_IN_CART:
-      let newCart = cart.map(item => {
+      newCart = cart.map(item => {
         if (item.id === action.item.id) {
           return {...item, quantity: action.item.quantity}
         } else {
@@ -195,6 +231,8 @@ export default function(state = defaultUser, action) {
         }
       })
       return {...state, cart: newCart}
+    case CLEAR_CART:
+      return {...state, cart: []}
     case GET_ORDER_HISTORY:
       return {...state, orderHistory: action.orderHistory}
     default:
