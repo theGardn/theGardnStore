@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import SimpleCard from './simple-card'
 
 /**
  * COMPONENT
@@ -11,6 +12,10 @@ export const UserHome = props => {
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <SimpleCard />
+      <SimpleCard />
+      <SimpleCard />
+      <SimpleCard />
     </div>
   )
 }

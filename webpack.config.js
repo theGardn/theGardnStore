@@ -19,7 +19,14 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          plugins: [['import', {libraryName: 'antd', style: 'css'}]]
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   }
