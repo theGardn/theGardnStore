@@ -42,7 +42,7 @@ export const getItemsFromDb = () => {
   }
 }
 
-export const productsReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST:
       return {...state, isLoading: true}
