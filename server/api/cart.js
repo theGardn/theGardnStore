@@ -1,9 +1,21 @@
 const router = require('express').Router()
 const { Order, Order_Detail } = require('../db/models')
 
-// add to cart - user = post / guest = local storage
-
-// separate 'checkout route' for both users / guests
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const cartItems = await Order.findOne({
+        where: {
+          userId: req.user.id
+        },
+        include: [{ model: Order_Detail }]
+      })
+      res.status(200).json(cartItems)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.post('/', async (req, res, next) => {
   try {
