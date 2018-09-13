@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.destroy('/', async (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   try {
     const orderDetailId = req.body.id
     const userId = req.user.id
