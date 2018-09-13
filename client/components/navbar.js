@@ -7,7 +7,7 @@ import './components-style/navbar.css';
 
 const Navbar = props => {
   const {handleClick, isLoggedIn, user} = props;
-  console.log(user);
+  console.log('user', user);
   return (
   <div id="nav-container">
     <img src='../../tree_logo.png' id='logo'/>
@@ -41,8 +41,8 @@ const Navbar = props => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id,
-    user: state.user
+    isLoggedIn: !!state.user.user.id,
+    user: state.user.user
   }
 }
 
