@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Order, Order_Detail } = require('../db/models')
+module.exports = router
 
 router.get('/:orderId', async (req, res, next) => {
   try {
@@ -13,4 +14,3 @@ router.get('/:orderId', async (req, res, next) => {
   }
 })
 
-module.exports = router

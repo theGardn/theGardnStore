@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Order, Order_Detail } = require('../db/models')
+module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
@@ -39,8 +40,3 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
-
-
-
-module.exports = router
-
