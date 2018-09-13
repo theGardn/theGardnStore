@@ -32,8 +32,9 @@
       "import",
       {
         "libraryName": "antd",
-        "style": true
+        "style": "css"
       }
-    ]
+    ],
+    "@babel/plugin-transform-runtime"
   ]
 }
