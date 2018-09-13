@@ -8,7 +8,7 @@ import SimpleCard from './simple-card'
  */
 export const UserHome = props => {
   const {email} = props
-
+  console.log(email);
   return (
     <div>
       <h3>Welcome, {email}</h3>
@@ -25,7 +25,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.user.email
   }
 }
 
