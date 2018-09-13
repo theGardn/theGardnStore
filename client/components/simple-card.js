@@ -19,6 +19,7 @@ export default class SimpleCard extends React.Component {
       // >
       //   <Meta title="Fruit Name" description="$3.25" />
       // </Card>
+      <h1>Simple Card</h1>
     )
   }
 }
