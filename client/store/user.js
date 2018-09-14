@@ -72,7 +72,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(clearCart())
-    dispatch(getUser(res.data))
+    dispatch(getUser(res.data));
     history.push('/home')
     dispatch(loadingFinish())
   } catch (dispatchOrHistoryErr) {
@@ -171,7 +171,7 @@ export const submitCheckoutThunk = user => async dispatch => {
       if (localCart) {
         res = await axios.post('/api/checkout', {
           item: localCart,
-          userId: user.id
+          userId: null
         })
       }
     }
@@ -184,14 +184,14 @@ export const submitCheckoutThunk = user => async dispatch => {
   }
 }
 
-export const getOrderHistoryThunk = orderId => async dispatch => {
+export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
   try {
     dispatch(isLoading())
     let res
     if (orderId) {
-      res = await axios.get(`/oder/${orderId}`)
+      res = await axios.get(`/orders/${orderId}`)
     } else {
-      res = await axios.get('/oder')
+      res = await axios.get(`/users/${userId}`)
     }
     dispatch(getOrderHistory(res.data))
     dispatch(loadingFinish())
