@@ -1,38 +1,62 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {logout, me} from '../store'
 import './components-style/navbar.css';
+import {Navbar as BootstrapNavbar} from 'react-bootstrap'
+import { NavLink, Link } from 'react-router-dom';
 
 const Navbar = props => {
   const {handleClick, isLoggedIn, user} = props;
-  console.log('user', user);
   return (
-  <div id="nav-container">
-    <img src='../../tree_logo.png' id='logo'/>
-    <h1>The Gardn</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          <p>Hello, {user.firstName}!</p>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+    <BootstrapNavbar inverse>
+      <BootstrapNavbar.Header>
+        <BootstrapNavbar.Brand>
+          <h1>The Gardn</h1>
+        </BootstrapNavbar.Brand>
+      </BootstrapNavbar.Header>
+      <BootstrapNavbar.Text>
+        {
+          isLoggedIn ? (
+            <span>Hello, {user.firstName}</span>
+          ) : null
+        }
+      </BootstrapNavbar.Text>
+      {
+        isLoggedIn ? (
+          <ul className="nav navbar-nav navbar-right">
+            <li>
+              <NavLink to='/home' className='nav-link'>
+                HOME
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to='#' className='nav-link' onClick={handleClick}>
+                LOG OUT
+              </NavLink>
+            </li>
+          </ul>
+        ) : (
+          <ul className="nav navbar-nav navbar-right">
+          <li>
+            <Link to='/home' className='nav-link'>
+              HOME
+            </Link>
+          </li>
+          <li>
+            <Link to='/login' className='nav-link'>
+              LOG IN
+            </Link>
+          </li>
+          <li>
+            <Link to='/signup' className='nav-link'>
+              SIGN UP
+            </Link>
+          </li>
+        </ul>
+        )
+      }
+    </BootstrapNavbar>
   )
 }
 
