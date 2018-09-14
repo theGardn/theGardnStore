@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { addItemToCartThunk } from '../store'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 class SingleProductCard extends React.Component {
     constructor(props){
@@ -31,6 +32,7 @@ class SingleProductCard extends React.Component {
         if(!this.props.currentItem) return <div />
         return (
             <div>
+                
                 <div>{this.props.currentItem.name}</div>
                 <div>{this.props.currentItem.price}</div>
             </div>
