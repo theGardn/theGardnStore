@@ -1,12 +1,18 @@
-import React, { Component } from 'react'
-import { Panel, Image, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { updateItemInCartThunk } from '../../store/user'
-
+import React, {Component} from 'react'
+import {
+  Panel,
+  Image,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button
+} from 'react-bootstrap'
+import {connect} from 'react-redux'
+import {updateItemInCartThunk} from '../../store/user'
 
 class CartCard extends Component {
   render() {
-    const { id, name, price, imageUrl } = this.props.item
+    const {id, name, price, imageUrl} = this.props.item
     return (
       <Panel id="cart-card">
         <Panel.Body>
@@ -40,7 +46,8 @@ class CartCard extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    updateCart: (item, quantity, user) => dispatch(updateItemInCartThunk(item, quantity, user))
+    updateCart: (item, quantity, user) =>
+      dispatch(updateItemInCartThunk(item, quantity, user))
   }
 }
 

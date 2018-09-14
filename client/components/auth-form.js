@@ -70,14 +70,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = withRouter(connect(
-  mapLogin,
-  mapDispatch
-)(AuthForm))
-export const Signup = withRouter(connect(
-  mapSignup,
-  mapDispatch
-)(AuthForm))
+export const Login = withRouter(connect(mapLogin, mapDispatch)(AuthForm))
+export const Signup = withRouter(connect(mapSignup, mapDispatch)(AuthForm))
 
 /**
  * PROP TYPES

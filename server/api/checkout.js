@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, Order_Detail } = require('../db/models')
+const {Order, Order_Detail} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
@@ -26,9 +26,11 @@ router.put('/', async (req, res, next) => {
     const sessionId = req.user.id
     const userId = req.body.userId
     if (sessionId === userId) {
-      const checkout = await Order.update({
-        purchased: true
-      }, {
+      const checkout = await Order.update(
+        {
+          purchased: true
+        },
+        {
           where: {
             userId: userId
           }
@@ -40,5 +42,3 @@ router.put('/', async (req, res, next) => {
     next(err)
   }
 })
-
-

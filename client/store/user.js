@@ -72,7 +72,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(clearCart())
-    dispatch(getUser(res.data));
+    dispatch(getUser(res.data))
     history.push('/home')
     dispatch(loadingFinish())
   } catch (dispatchOrHistoryErr) {

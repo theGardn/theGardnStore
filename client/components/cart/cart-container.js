@@ -1,7 +1,7 @@
 import React from 'react'
 import CartDetail from './cart-detail'
-import CartSidebar from './cart-sidebar'
-import { PageHeader } from 'react-bootstrap'
+import OrderDetailsSidebar from '../order-detail-sidebar'
+import {PageHeader} from 'react-bootstrap'
 import '../components-style/cart.css'
 
 const cartDummy = [
@@ -51,11 +51,10 @@ const CartContainer = () => {
       </div>
       <div id="cart-content">
         <CartDetail cart={cartDummy} />
-        <CartSidebar />
+        <OrderDetailsSidebar />
       </div>
     </div>
   )
 }
 
 export default CartContainer
-
