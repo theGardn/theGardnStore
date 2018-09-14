@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
   Panel,
   Image,
@@ -6,10 +6,10 @@ import {
   FormControl,
   ControlLabel,
   Button,
-  InputGroup,
+  InputGroup
 } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { updateItemInCartThunk } from '../../store/user'
+import {connect} from 'react-redux'
+import {updateItemInCartThunk} from '../../store/user'
 
 class CartCard extends Component {
   constructor() {
@@ -21,7 +21,6 @@ class CartCard extends Component {
     this.handleQtyUpdate = this.handleQtyUpdate.bind(this)
   }
 
-
   handleQtyChange(evt) {
     this.setState({
       value: evt.target.value
@@ -29,13 +28,13 @@ class CartCard extends Component {
   }
 
   async handleQtyUpdate() {
-    const { item, user } = this.props
+    const {item, user} = this.props
     const qty = this.state.value
     await this.props.updateQty(item, qty, user)
   }
 
   render() {
-    const { id, name, price, imageUrl } = this.props.item
+    const {id, name, price, imageUrl} = this.props.item
     return (
       <Panel id="cart-card">
         <Panel.Body>
@@ -58,7 +57,8 @@ class CartCard extends Component {
                     componentClass="select"
                     placeholder="select"
                     value={this.state.value}
-                    onChange={this.handleQtyChange}>
+                    onChange={this.handleQtyChange}
+                  >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -66,7 +66,9 @@ class CartCard extends Component {
                     <option value="5">5</option>
                   </FormControl>
                   <InputGroup.Button>
-                    <Button id="card-update" onClick={this.handleQtyUpdate}>Update</Button>
+                    <Button id="card-update" onClick={this.handleQtyUpdate}>
+                      Update
+                    </Button>
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
@@ -85,10 +87,10 @@ const mapState = state => {
   }
 }
 
-
 const mapDispatch = dispatch => {
   return {
-    updateQty: (item, quantity, user) => dispatch(updateItemInCartThunk(item, quantity, user))
+    updateQty: (item, quantity, user) =>
+      dispatch(updateItemInCartThunk(item, quantity, user))
   }
 }
 

@@ -29,21 +29,21 @@ const defaultUser = {
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({ type: GET_USER, user })
-const removeUser = () => ({ type: REMOVE_USER })
-const addItemToCart = item => ({ type: ADD_ITEM_TO_CART, item })
+const getUser = user => ({type: GET_USER, user})
+const removeUser = () => ({type: REMOVE_USER})
+const addItemToCart = item => ({type: ADD_ITEM_TO_CART, item})
 const updateItemInCart = (...itemAndQuantity) => ({
   type: UPDATE_ITEM_IN_CART,
   itemAndQuantity
 })
-const removeItemFromCart = item => ({ type: REMOVE_ITEM_FROM_CART, item })
+const removeItemFromCart = item => ({type: REMOVE_ITEM_FROM_CART, item})
 const getOrderHistory = orderHistory => ({
   type: GET_ORDER_HISTORY,
   orderHistory
 })
-const isLoading = () => ({ type: IS_LOADING })
-const loadingFinish = () => ({ type: LOADING_FINISH })
-const clearCart = () => ({ type: CLEAR_CART })
+const isLoading = () => ({type: IS_LOADING})
+const loadingFinish = () => ({type: LOADING_FINISH})
+const clearCart = () => ({type: CLEAR_CART})
 
 /**
  * THUNK CREATORS
@@ -64,10 +64,10 @@ export const auth = (email, password, method) => async dispatch => {
   let res
   try {
     dispatch(isLoading())
-    res = await axios.post(`/auth/${method}`, { email, password })
+    res = await axios.post(`/auth/${method}`, {email, password})
     dispatch(loadingFinish())
   } catch (authError) {
-    return dispatch(getUser({ error: authError }))
+    return dispatch(getUser({error: authError}))
   }
 
   try {
@@ -97,13 +97,13 @@ export const logout = () => async dispatch => {
 
 export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
-    const newItem = { ...item, quantity: quantity }
+    const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.post('/api/cart', { item: newItem, userId: user.id })
+    const res = await axios.post('/api/cart', {item: newItem, userId: user.id})
     dispatch(addItemToCart(newItem))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
-      localCart = { ...localCart, [newItem.id]: newItem }
+      localCart = {...localCart, [newItem.id]: newItem}
     } else {
       localCart = newItem
     }
@@ -121,9 +121,9 @@ export const updateItemInCartThunk = (
   user
 ) => async dispatch => {
   try {
-    const newItem = { ...item, quantity: quantity }
+    const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.put('/api/cart', { item: newItem, userId: user.id })
+    const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
     dispatch(updateItemInCart(res.data))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -142,7 +142,7 @@ export const updateItemInCartThunk = (
 export const removeItemFromCartThunk = (item, user) => async dispatch => {
   try {
     dispatch(isLoading())
-    const res = await axios.delete('/api/cart', { item: item, userId: user.id })
+    const res = await axios.delete('/api/cart', {item: item, userId: user.id})
     dispatch(removeItemFromCart(item))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -165,7 +165,7 @@ export const submitCheckoutThunk = user => async dispatch => {
     dispatch(isLoading())
     let res
     if (user) {
-      res = await axios.put('/api/checkout', { userId: user.id })
+      res = await axios.put('/api/checkout', {userId: user.id})
     } else {
       let localCart = JSON.parse(localStorage.getItem(garden_store))
       if (localCart) {
@@ -204,37 +204,37 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
+export default function(state = defaultUser, action) {
   let newCart
   switch (action.type) {
     case IS_LOADING:
-      return { ...state, isLoading: true }
+      return {...state, isLoading: true}
     case LOADING_FINISH:
-      return { ...state, isLoading: false }
+      return {...state, isLoading: false}
     case GET_USER:
-      return { ...state, user: action.user }
+      return {...state, user: action.user}
     case REMOVE_USER:
       return defaultUser
     case ADD_ITEM_TO_CART:
-      return { ...state, cart: [...cart, action.item] }
+      return {...state, cart: [...cart, action.item]}
     case REMOVE_ITEM_FROM_CART:
       newCart = cart.filter(item => {
         return item.id != action.item.id
       })
-      return { ...state, cart: newCart }
+      return {...state, cart: newCart}
     case UPDATE_ITEM_IN_CART:
       newCart = state.cart.map(item => {
         if (item.id === action.item.id) {
-          return { ...item, quantity: action.item.quantity }
+          return {...item, quantity: action.item.quantity}
         } else {
           return item
         }
       })
-      return { ...state, cart: newCart }
+      return {...state, cart: newCart}
     case CLEAR_CART:
-      return { ...state, cart: [] }
+      return {...state, cart: []}
     case GET_ORDER_HISTORY:
-      return { ...state, orderHistory: action.orderHistory }
+      return {...state, orderHistory: action.orderHistory}
     default:
       return state
   }
