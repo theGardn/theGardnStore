@@ -11,11 +11,12 @@ const Navbar = props => {
   return (
     <BootstrapNavbar inverse>
       <BootstrapNavbar.Header>
+        <img src='../tree_logo.png' id='logo'/>
         <BootstrapNavbar.Brand>
-          <h1>The Gardn</h1>
+          <h1 id='navbar-brand'>The Gardn</h1>
         </BootstrapNavbar.Brand>
       </BootstrapNavbar.Header>
-      <BootstrapNavbar.Text>
+      <BootstrapNavbar.Text id='navbar-text'>
         {
           isLoggedIn ? (
             <span>Hello, {user.firstName}</span>
