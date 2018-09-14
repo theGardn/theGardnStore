@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {connect} from 'react'
 import CartDetail from './cart-detail'
 import OrderDetailsSidebar from '../order-detail-sidebar'
 import {PageHeader} from 'react-bootstrap'

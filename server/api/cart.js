@@ -21,6 +21,25 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
+router.put('/', async (req, res, next) => {
+  try {
+    const sessionId = req.user.id
+    const userId = req.body.userId
+    if (sessionId === userId) {
+      const {quantity, id} = req.body.item
+      const updateQty = await Order_Detail.update(
+        {quantity},
+        {
+          where: {id}
+        }
+      )
+      res.status(200).json(updateQty)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const sessionId = req.user.id
