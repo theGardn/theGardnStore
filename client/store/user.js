@@ -131,7 +131,7 @@ export const updateItemInCartThunk = (
     } else {
       localCart = newItem
     }
-    localStorage.setItem(JSON.stringify(garden_store, localCart))
+    localStorage.setItem(garden_store, JSON.stringify(localCart))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -223,7 +223,7 @@ export default function (state = defaultUser, action) {
       })
       return { ...state, cart: newCart }
     case UPDATE_ITEM_IN_CART:
-      newCart = cart.map(item => {
+      newCart = state.cart.map(item => {
         if (item.id === action.item.id) {
           return { ...item, quantity: action.item.quantity }
         } else {
