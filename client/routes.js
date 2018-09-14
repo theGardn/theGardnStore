@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter, Route, Switch } from 'react-router-dom'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, UserHome } from './components'
+import {Login, Signup, UserHome} from './components'
 import CartContainer from './components/cart/cart-container'
-import { me } from './store'
+import {me} from './store'
 
 /**
  * COMPONENT
@@ -15,7 +15,8 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props
+    const {isLoggedIn} = this.props
+    console.log(isLoggedIn)
 
     return (
       <Switch>
@@ -23,15 +24,14 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={CartContainer} />
+        <Route path="/home" component={UserHome} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-            <Route path="/cart" component={CartContainer} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={UserHome} />
       </Switch>
     )
   }
@@ -44,7 +44,7 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.user.id
   }
 }
 
@@ -58,12 +58,7 @@ const mapDispatch = dispatch => {
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(Routes)
-)
+export default withRouter(connect(mapState, mapDispatch)(Routes))
 
 /**
  * PROP TYPES

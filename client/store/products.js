@@ -32,10 +32,11 @@ export const setItem = itemId => {
 
 export const getItemsFromDb = () => {
   return async dispatch => {
+    console.log('thunk hit');
     dispatch(loading())
     try {
-      const items = await axios.get('/api/products')
-      dispatch(getItems(items))
+      const { data } = await axios.get('/api/products')
+      dispatch(getItems(data))
     } catch (err) {
       console.error(err)
     }
