@@ -1,4 +1,24 @@
-#nav-container {
-  display: inline;
-  background-color: red;
+#logo {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+#navbar-brand {
+  cursor: default;
+  padding-left: 50px;
+  font-size: 30px;
+
+}
+
+.navbar-brand {
+  color: white !important;
+  margin-top: 15px;
+}
+
+#navbar-text {
+  margin-top: 28px;
+  font-size: 20px;
 }
