@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import CartCard from './cart-card';
 
-class CartDetail extends Component {
-  render() {
-    const { cart } = this.props
-    console.log('cart', cart)
-    return (
-      <div id="cart-detail">
+const CartDetail = (props) => {
+  const { cart } = props
+  return (
+    <div id="cart-detail">
+      <div id="cart-title">
         <h2>Your Cart</h2>
       </div>
-    )
-  }
+      <div id="cart-grid">
+        {
+          cart.map(item => {
+            return (
+              <CartCard key={item.id} item={item} />
+            )
+          })
+        }
+      </div>
+    </div>
+  )
 }
 
-const mapState = state => {
-  return {
-    cart: state.user.cart
-  }
-}
-
-export default connect(mapState)(CartDetail)
+export default CartDetail
 
