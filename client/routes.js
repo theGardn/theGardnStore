@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
+import CartContainer from './components/cart/cart-container'
 import {me} from './store'
 
 /**
@@ -15,13 +16,14 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-    console.log(isLoggedIn);
+    console.log(isLoggedIn)
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/cart" component={CartContainer} />
         <Route path="/home" component={UserHome} />
         {isLoggedIn && (
           <Switch>
@@ -56,12 +58,7 @@ const mapDispatch = dispatch => {
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(Routes)
-)
+export default withRouter(connect(mapState, mapDispatch)(Routes))
 
 /**
  * PROP TYPES

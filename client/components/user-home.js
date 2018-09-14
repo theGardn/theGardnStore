@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom'
  */
 export const UserHome = props => {
   const {email} = props
-  console.log(email);
+  console.log(email)
   return (
     <div>
       <h3>Welcome, {email}</h3>
