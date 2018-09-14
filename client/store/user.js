@@ -32,9 +32,9 @@ const defaultUser = {
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const addItemToCart = item => ({type: ADD_ITEM_TO_CART, item})
-const updateItemInCart = (...itemAndQuantity) => ({
+const updateItemInCart = item => ({
   type: UPDATE_ITEM_IN_CART,
-  itemAndQuantity
+  item
 })
 const removeItemFromCart = item => ({type: REMOVE_ITEM_FROM_CART, item})
 const getOrderHistory = orderHistory => ({
@@ -43,7 +43,10 @@ const getOrderHistory = orderHistory => ({
 })
 const isLoading = () => ({type: IS_LOADING})
 const loadingFinish = () => ({type: LOADING_FINISH})
-const clearCart = () => ({type: CLEAR_CART})
+const clearCart = () => {
+  localStorage.clear(garden_store)
+  return {type: CLEAR_CART}
+}
 
 /**
  * THUNK CREATORS
@@ -53,6 +56,7 @@ export const me = () => async dispatch => {
     dispatch(isLoading())
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
+    console.log('me logged in')
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -74,6 +78,7 @@ export const auth = (email, password, method) => async dispatch => {
     dispatch(clearCart())
     dispatch(getUser(res.data))
     history.push('/home')
+    console.log('auth logged in')
     dispatch(loadingFinish())
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -99,7 +104,12 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.post('/api/cart', {item: newItem, userId: user.id})
+    if (user) {
+      const res = await axios.post('/api/cart', {
+        item: newItem,
+        userId: user.id
+      })
+    }
     dispatch(addItemToCart(newItem))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -123,7 +133,9 @@ export const updateItemInCartThunk = (
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
+    if (user) {
+      const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
+    }
     dispatch(updateItemInCart(res.data))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -142,7 +154,9 @@ export const updateItemInCartThunk = (
 export const removeItemFromCartThunk = (item, user) => async dispatch => {
   try {
     dispatch(isLoading())
-    const res = await axios.delete('/api/cart', {item: item, userId: user.id})
+    if (user) {
+      const res = await axios.delete('/api/cart', {item: item, userId: user.id})
+    }
     dispatch(removeItemFromCart(item))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
     if (localCart) {
@@ -191,7 +205,11 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
     if (orderId) {
       res = await axios.get(`/orders/${orderId}`)
     } else {
-      res = await axios.get(`/users/${userId}`)
+      if (userId) {
+        res = await axios.get(`/users/${userId}`)
+      } else {
+        res.data = null
+      }
     }
     dispatch(getOrderHistory(res.data))
     dispatch(loadingFinish())
