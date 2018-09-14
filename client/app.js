@@ -4,8 +4,6 @@ import Routes from './routes'
 import {connect} from 'react-redux'
 import {getItemsFromDb} from './store/products'
 import {withRouter} from 'react-router-dom'
-import { getItemsFromDb } from './store/products';
-import {withRouter} from 'react-router-dom';
 import './components/components-style/app.css';
 
 const mapDispatchToProps = dispatch => {
