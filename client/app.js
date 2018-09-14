@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {Navbar} from './components'
 import Routes from './routes'
 import {connect} from 'react-redux'
-import { getItemsFromDb } from './store/products';
-import {withRouter} from 'react-router-dom';
+import {getItemsFromDb} from './store/products'
+import {withRouter} from 'react-router-dom'
+import './components/components-style/app.css';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -12,7 +13,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  const { products } = state;
+  const {products} = state
   return {
     products: products.allItems
   }
@@ -21,12 +22,11 @@ const mapStateToProps = state => {
 class App extends Component {
   async componentDidMount() {
     try {
-      const { getProducts } = this.props;
-      await getProducts();
-      console.log('thunk run');
-    }
-    catch(err) {
-      console.error(err);
+      const {getProducts} = this.props
+      await getProducts()
+      console.log('thunk run')
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -34,10 +34,12 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-        <Routes />
+        <div id='page-container'>
+          <Routes />
+        </div>
       </div>
-    );
+    )
   }
- }
+}
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

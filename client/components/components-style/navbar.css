@@ -10,7 +10,6 @@
   cursor: default;
   padding-left: 50px;
   font-size: 30px;
-
 }
 
 .navbar-brand {
@@ -21,4 +20,8 @@
 #navbar-text {
   margin-top: 28px;
   font-size: 20px;
+}
+
+#shopping-cart {
+  font-size: 25px;
 }

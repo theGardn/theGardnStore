@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-bootstrap'
+
 // import { addItemToCartThunk } from '../store'
 import SingleProductCard from './singleProductCard'
 
@@ -24,19 +25,28 @@ class ProductDetail extends React.Component {
     }
 }
 
-const mapProps = (state) => {
-    return {
-        currentItem: state.products.currentItem,
-        user: state.user.user
-    }
+
+    // if(!this.props.currentItem) return <Redirect to='/root' />
+    return (
+      <div>
+        <div>productDetail</div>
+        {/* <SingleProductCard /> */}
+      </div>
+    )
+  }
 }
 
-const mapDispatch = (dispatch) => {
-    return {
-        // addItemToCart: (item, quantity, user) => dispatch(addItemToCartThunk(item, quantity, user))
-    }
+const mapProps = state => {
+  return {
+    currentItem: state.products.currentItem,
+    user: state.user.user
+  }
 }
 
-
+const mapDispatch = dispatch => {
+  return {
+    // addItemToCart: (item, quantity, user) => dispatch(addItemToCartThunk(item, quantity, user))
+  }
+}
 
 export default connect(mapProps, mapDispatch)(ProductDetail)

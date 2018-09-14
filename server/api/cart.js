@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order, Order_Detail } = require('../db/models')
+const {Order, Order_Detail} = require('../db/models')
 module.exports = router
 
 router.get('/:userId', async (req, res, next) => {
@@ -12,7 +12,7 @@ router.get('/:userId', async (req, res, next) => {
           userId: req.user.id,
           purchased: false
         },
-        include: [{ model: Order_Detail }]
+        include: [{model: Order_Detail}]
       })
       res.status(200).json(cartItems)
     }
@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
           purchased: false
         }
       })
-      const { productId, quantity, price } = req.body.item
+      const {productId, quantity, price} = req.body.item
       const orderDetails = await Order_Detail.create({
         productId,
         quantity,
