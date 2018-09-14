@@ -3,6 +3,7 @@ import {Navbar} from './components'
 import Routes from './routes'
 import {connect} from 'react-redux'
 import { getItemsFromDb } from './store/products';
+import {withRouter} from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -39,4 +40,4 @@ class App extends Component {
   }
  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
