@@ -32,7 +32,7 @@ const defaultUser = {
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const addItemToCart = item => ({type: ADD_ITEM_TO_CART, item})
-const updateItemInCart = (item) => ({
+const updateItemInCart = item => ({
   type: UPDATE_ITEM_IN_CART,
   item
 })
@@ -76,7 +76,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(clearCart())
-    dispatch(getUser(res.data));
+    dispatch(getUser(res.data))
     history.push('/home')
     console.log('auth logged in')
     dispatch(loadingFinish())
@@ -104,8 +104,11 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    if(user){
-      const res = await axios.post('/api/cart', {item: newItem, userId: user.id})
+    if (user) {
+      const res = await axios.post('/api/cart', {
+        item: newItem,
+        userId: user.id
+      })
     }
     dispatch(addItemToCart(newItem))
     let localCart = JSON.parse(localStorage.getItem(garden_store))
@@ -130,7 +133,7 @@ export const updateItemInCartThunk = (
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    if(user){
+    if (user) {
       const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
     }
     dispatch(updateItemInCart(res.data))
@@ -151,7 +154,7 @@ export const updateItemInCartThunk = (
 export const removeItemFromCartThunk = (item, user) => async dispatch => {
   try {
     dispatch(isLoading())
-    if(user){
+    if (user) {
       const res = await axios.delete('/api/cart', {item: item, userId: user.id})
     }
     dispatch(removeItemFromCart(item))
@@ -202,7 +205,7 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
     if (orderId) {
       res = await axios.get(`/orders/${orderId}`)
     } else {
-      if(userId){
+      if (userId) {
         res = await axios.get(`/users/${userId}`)
       } else {
         res.data = null
@@ -215,8 +218,6 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
     dispatch(loadingFinish())
   }
 }
-
-
 
 /**
  * REDUCER
