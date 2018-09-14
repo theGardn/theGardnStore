@@ -2,8 +2,14 @@ import React, {Component} from 'react'
 import {Navbar} from './components'
 import Routes from './routes'
 import {connect} from 'react-redux'
+<<<<<<< Updated upstream
 import {getItemsFromDb} from './store/products'
 import {withRouter} from 'react-router-dom'
+=======
+import { getItemsFromDb } from './store/products';
+import {withRouter} from 'react-router-dom';
+import './components/components-style/app.css';
+>>>>>>> Stashed changes
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -33,7 +39,9 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-        <Routes />
+        <div id='page-container'>
+          <Routes />
+        </div>
       </div>
     )
   }
