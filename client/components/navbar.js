@@ -27,6 +27,16 @@ const Navbar = props => {
             </NavLink>
           </li>
           <li>
+            <Link to="/categories" className="nav-link">
+              CATEGORIES
+            </Link>
+          </li>
+          <li>
+            <Link to="/products" className="nav-link">
+              ALL ITEMS
+            </Link>
+          </li>
+          <li>
             <NavLink to="#" className="nav-link" onClick={handleClick}>
               LOG OUT
             </NavLink>
@@ -37,6 +47,16 @@ const Navbar = props => {
           <li>
             <Link to="/home" className="nav-link">
               HOME
+            </Link>
+          </li>
+          <li>
+            <Link to="/categories" className="nav-link">
+              CATEGORIES
+            </Link>
+          </li>
+          <li>
+            <Link to="/products" className="nav-link">
+              ALL ITEMS
             </Link>
           </li>
           <li>
