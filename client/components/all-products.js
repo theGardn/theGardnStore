@@ -1,47 +1,31 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import SimpleCard from './simple-card'
 import {withRouter} from 'react-router-dom'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email, products, isLoggedIn} = props
+export const AllProducts = props => {
+  const {products} = props
   return (
-    <div>
+    <React.Fragment>
       {products.map(item => {
         return (
           <SimpleCard
             key={item.id}
             name={item.name}
             imageUrl={item.imageUrl}
-            id={item.id}
             price={item.price}
+            id={item.id}
           />
         )
       })}
-    </div>
+    </React.Fragment>
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
-    email: state.user.user.email,
-    isLoggedIn: !!state.user.user.id,
     products: state.products.allItems
   }
 }
 
-export default withRouter(connect(mapState)(UserHome))
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default withRouter(connect(mapState)(AllProducts))

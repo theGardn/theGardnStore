@@ -3,12 +3,14 @@ import {Navbar} from './components'
 import Routes from './routes'
 import {connect} from 'react-redux'
 import {getItemsFromDb} from './store/products'
+import {getCategories} from './store/categories'
 import {withRouter} from 'react-router-dom'
 import './components/components-style/app.css';
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(getItemsFromDb())
+    getProducts: () => dispatch(getItemsFromDb()),
+    getCategories: () => dispatch(getCategories())
   }
 }
 
@@ -27,6 +29,14 @@ class App extends Component {
       console.log('thunk run')
     } catch (err) {
       console.error(err)
+    }
+
+    try {
+      const {getCategories} = this.props
+      await getCategories()
+      console.log('thunk run')
+    } catch (err) {
+      console.err(err)
     }
   }
 
