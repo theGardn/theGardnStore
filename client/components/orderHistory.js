@@ -18,14 +18,23 @@ class OrderHistory extends Component {
         let panelKey = 1
         return (
             <div>
-                <input placeholder='Enter Your Order Number' onSubmit={this.handleOrderSearch} id='orderHistorySearchbar' />
-                <PanelGroup accordion id='orderHistoryList' >
-                    {this.props.orderHistory.map((order) => {
-                        return (
-                            <OrderHistoryCard order={order} eventKey={panelKey++} />
-                        )
-                    })}
-                </PanelGroup>
+                <div id='orderHistorySearchbar'>
+                    <input placeholder='Enter Your Order Number' onSubmit={this.handleOrderSearch}  />
+                </div>
+                <Panel bsStyle="info" >
+                    <Panel.Heading>
+                    <Panel.Title componentClass="h3">Order History</Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Body>
+                    <PanelGroup accordion id='orderHistoryList' >
+                        {this.props.orderHistory.map((order) => {
+                            return (
+                                <OrderHistoryCard order={order} eventKey={panelKey++} />
+                            )
+                        })}
+                    </PanelGroup>
+                    </Panel.Body>
+                </Panel>
             </div>
             
         )

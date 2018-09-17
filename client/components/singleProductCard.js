@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {addItemToCartThunk} from '../store'
 import {Grid, Row, Col, Button, Panel, Image} from 'react-bootstrap'
+import {withRouter} from 'react-router-dom'
 
 class SingleProductCard extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class SingleProductCard extends React.Component {
 
   handleAddItem(evt) {
     evt.preventDefault()
-    addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
+    this.props.addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
   }
 
   render() {
@@ -42,7 +43,7 @@ class SingleProductCard extends React.Component {
                 </Col>
 
                 <Col md={6}>
-                  <form>
+                  <form onSubmit={this.handleAddItem}>
                     <h3>Product: {currentItem.name}</h3>
                     <h3>Price: {currentItem.price}</h3>
                     <h3>In store: {currentItem.quantity}</h3>
@@ -85,4 +86,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapProps, mapDispatch)(SingleProductCard)
+export default withRouter(connect(mapProps, mapDispatch)(SingleProductCard))
