@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {getItemsFromDb} from './store/products'
 import {getCategories} from './store/categories'
 import {withRouter} from 'react-router-dom'
+import './components/components-style/app.css';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -43,7 +44,9 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-        <Routes />
+        <div id='page-container'>
+          <Routes />
+        </div>
       </div>
     )
   }
