@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {logout, me} from '../store'
-import './components-style/navbar.css';
+import './components-style/navbar.css'
 import {Navbar as BootstrapNavbar, Glyphicon} from 'react-bootstrap'
-import { NavLink, Link } from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom'
 
 const Navbar = props => {
   const {handleClick, isLoggedIn, user} = props
@@ -19,48 +19,52 @@ const Navbar = props => {
       <BootstrapNavbar.Text id="navbar-text">
         {isLoggedIn ? <span>Hello, {user.firstName}</span> : null}
       </BootstrapNavbar.Text>
-      {
-        isLoggedIn ? (
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <NavLink to='/home' className='nav-link'>
-                HOME
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='#' className='nav-link' onClick={handleClick}>
-                LOG OUT
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to='/cart' className='nav-link'>
-                <Glyphicon glyph="shopping-cart"/>
-              </NavLink>
-            </li>
-          </ul>
-        ) : (
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <Link to="/home" className="nav-link">
-                HOME
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="nav-link">
-                LOG IN
-              </Link>
-            </li>
-            <li>
-              <Link to="/signup" className="nav-link">
-                SIGN UP
-              </Link>
-            </li>
-            <li>
-              <NavLink to='/cart' className='nav-link'>
-                <Glyphicon glyph="shopping-cart" id='shopping-cart'/>
-              </NavLink>
-            </li>
-          </ul>
+      {isLoggedIn ? (
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+            <NavLink to="/home" className="nav-link">
+              HOME
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="#" className="nav-link" onClick={handleClick}>
+              LOG OUT
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className="nav-link" to="/orders">
+              HISTORY
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart" className="nav-link">
+              <Glyphicon glyph="shopping-cart" />
+            </NavLink>
+          </li>
+        </ul>
+      ) : (
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+            <Link to="/home" className="nav-link">
+              HOME
+            </Link>
+          </li>
+          <li>
+            <Link to="/login" className="nav-link">
+              LOG IN
+            </Link>
+          </li>
+          <li>
+            <Link to="/signup" className="nav-link">
+              SIGN UP
+            </Link>
+          </li>
+          <li>
+            <NavLink to="/cart" className="nav-link">
+              <Glyphicon glyph="shopping-cart" id="shopping-cart" />
+            </NavLink>
+          </li>
+        </ul>
       )}
     </BootstrapNavbar>
   )
