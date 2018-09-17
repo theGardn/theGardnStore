@@ -13,7 +13,7 @@ class ProductDetail extends React.Component {
     super(props)
     this.props.setItem(this.props.match.params.id)
   }
-  
+
   componentDidMount() {
     // console.log('Component did mount!!')
     // this.props.setItem(this.props.match.params.id)
@@ -23,7 +23,7 @@ class ProductDetail extends React.Component {
   //   if(this.props.products && !this.props.currentItem) {
   //     this.props.setItem(this.props.match.params.id)
   //   }
-  
+
   }
 
   findCurrentItem(itemId){
@@ -42,15 +42,11 @@ class ProductDetail extends React.Component {
       // console.log('CurrentItem: ', this.props.currentItem)
       this.findCurrentItem(this.props.match.params.id)
     // }
-    
+
     // if(!this.props.currentItem.name) return <Redirect to='/home' />
     return (
       <div>
-        <div>productDetail</div>
         { this.props.currentItem ? <SingleProductCard /> : <h3>Can Not Find the Product</h3> }
-        <div>
-          <h2>Related product list goes here</h2>
-        </div>
       </div>
     )
   }
