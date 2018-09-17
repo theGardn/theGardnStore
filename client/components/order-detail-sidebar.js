@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 function calculateTotal(cart) {
   let sum = 0
   for (let i = 0; i < cart.length; i++) {
-    sum += cart[i].price
+    sum += parseInt(cart[i].price)
   }
   return sum
 }
