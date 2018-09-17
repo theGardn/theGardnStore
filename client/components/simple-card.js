@@ -11,7 +11,7 @@ export default class simpleCard extends Component {
       <Link to={path}>
         <div id="simple-card" className="col-sm-12">
         <Panel prod={id}>
-          <div id="simple-card-body"
+          <div id="simple-card-body">
           <Panel.Body>
             <div id="card-img">
               <Image src={imageUrl} rounded />
