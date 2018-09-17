@@ -42,7 +42,7 @@ const getOrderHistory = orderHistory => ({
 const isLoading = () => ({type: IS_LOADING})
 const loadingFinish = () => ({type: LOADING_FINISH})
 const clearCart = () => {
-  localStorage.clear(garden_store)
+  localStorage.clear("garden_store")
   return {type: CLEAR_CART}
 }
 
@@ -112,15 +112,20 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
     let localCart = JSON.parse(localStorage.getItem("garden_store"))
     if (localCart) {
       if (Object.keys(localCart).indexOf(newItem.id.toString()) > -1) {
-        console.log('if worked');
-        localCart = {...localCart, [newItem.id]: {...item, quantity: quantity + newItem.quantity}}
+        console.log('item exists in local cart already');
+        localCart = {...localCart, [newItem.id]: {...item, quantity: localCart[newItem.id].quantity + newItem.quantity}}
+        localStorage.setItem("garden_store", JSON.stringify(localCart));
       }
-      else localCart = {...localCart, [newItem.id]: newItem}
+      else {
+        console.log('local Cart exists, but item does not');
+        localCart = {...localCart, [newItem.id]: newItem}
+      }
     } else {
-      localCart = newItem
+      console.log('local cart does not exist');
+      localCart = {[newItem.id]: newItem}
     }
     localStorage.setItem("garden_store", JSON.stringify(localCart))
-    console.log(localCart);
+    console.log('current local cart', localCart);
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
