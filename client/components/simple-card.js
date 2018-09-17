@@ -9,7 +9,8 @@ export default class simpleCard extends Component {
     const path = this.props.price ? `/product/${id}` : `/category/${id}`
     return (
       <Link to={path}>
-        <Panel id="simple-card" className="col-sm-12" prod={id}>
+        <div id="simple-card">
+        <Panel className="col-sm-12" prod={id}>
           <Panel.Body id="simple-card-body">
             <div id="card-img">
               <Image src={imageUrl} rounded />
@@ -24,6 +25,7 @@ export default class simpleCard extends Component {
             </div>
           </Panel.Body>
         </Panel>
+        </div>
       </Link>
     )
   }
