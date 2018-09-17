@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup} from './components'
 import CartContainer from './components/cart/cart-container'
 import AllProducts from './components/all-products'
 import Categories from './components/categories'
@@ -10,7 +10,6 @@ import ProductDetail from './components/productDetail'
 import {me} from './store'
 import CheckoutPage from './components/checkout-page'
 import OrderHistory from './components/orderHistory'
-
 /**
  * COMPONENT
  */
@@ -29,12 +28,11 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={CartContainer} />
-        <Route path="/categories" component={Categories} />
-        <Route path="/products" component={AllProducts} />
-        <Route path="/home" component={UserHome} />
+        <Route path="/category/:id" component={AllProducts} />
+        <Route path="/home" component={Categories} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/product" component={ProductDetail} />
-        <Route path='/checkout' component={CheckoutPage}/>
+        <Route path="/checkout" component={CheckoutPage} />
         <Route path="/orderhistory" component={OrderHistory} />
         {isLoggedIn && (
           <Switch>
@@ -42,7 +40,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={UserHome} />
+        <Route component={Categories} />
       </Switch>
     )
   }
