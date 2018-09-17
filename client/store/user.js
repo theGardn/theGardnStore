@@ -207,11 +207,12 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
     } else {
       if (userId) {
         res = await axios.get(`/users/${userId}`)
+        res = res.data
       } else {
-        res.data = null
+        res = []
       }
     }
-    dispatch(getOrderHistory(res.data))
+    dispatch(getOrderHistory(res))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
