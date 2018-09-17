@@ -36,7 +36,7 @@ const OrderDetailsSidebar = props => {
             })}
           </div>
           <div id="order-detail-sidebar-total">
-            <h3 id="order-detail-total">{calculateTotal(cart)}</h3>
+            <h3 id="order-detail-total">${calculateTotal(cart)}</h3>
           </div>
           <Button bsStyle="success" onClick={handleCheckout}>
             PROCEED TO CHECKOUT

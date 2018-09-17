@@ -48,7 +48,7 @@ class SingleProductCard extends React.Component {
                     <h3>Price: {currentItem.price}</h3>
                     <h3>In store: {currentItem.quantity}</h3>
                     <div>
-                      <label for="addQuantity">Purchase: </label>
+                      <label htmlFor="addQuantity">Purchase: </label>
                       <input
                         type="text"
                         className="addQuantity"

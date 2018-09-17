@@ -51,7 +51,9 @@ router.post('/', async (req, res, next) => {
           purchased: false
         }
       })
-      const {productId, quantity, price} = req.body.item
+      const {id, quantity, price} = req.body.item
+      const productId = id;
+      console.log(id);
       const orderDetails = await Order_Detail.create({
         productId,
         quantity,
