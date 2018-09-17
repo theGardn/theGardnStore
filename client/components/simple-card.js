@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {Panel, Image} from 'react-bootstrap'
-import './components-style/s-card.css'
+import './components-style/navbar.css'
 
 export default class simpleCard extends Component {
   render() {
