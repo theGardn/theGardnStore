@@ -1,0 +1,23 @@
+.form-group {
+  width: 100%;
+  padding-right: 30px;
+}
+
+#credit-card-input {
+  width: 35%;
+  padding-right: 0;
+}
+
+#cvc-input, #expy-month-input, #expy-year-input {
+  width: 15%;
+  padding-right: 0
+}
+
+#submit-order-button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+#checkout-page-content {
+  margin-top: 30px;
+}
