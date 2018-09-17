@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, PanelGroup } from 'react-bootstrap'
 
@@ -7,12 +7,12 @@ import OrderHistoryCard from './orderHistoryCard'
 
 class OrderHistory extends Component {
     componentDidMount(){
-        getOrderHistory()
+        this.props.getOrderHistory()
     }
 
     handleOrderSearch(evt){
         evt.preventDefault()
-        if(evt.target.value) getOrderHistory(evt.target.value)
+        if(evt.target.value) this.props.getOrderHistory(evt.target.value)
     }
     render(){
         let panelKey = 1

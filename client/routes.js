@@ -8,6 +8,7 @@ import AllProducts from './components/all-products'
 import Categories from './components/categories'
 import ProductDetail from './components/productDetail'
 import {me} from './store'
+import OrderHistory from './components/orderHistory'
 
 /**
  * COMPONENT
@@ -32,6 +33,7 @@ class Routes extends Component {
         <Route path="/home" component={UserHome} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/product" component={ProductDetail} />
+        <Route path="/orderhistory" component={OrderHistory} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
