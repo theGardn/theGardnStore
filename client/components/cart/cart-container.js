@@ -13,7 +13,7 @@ const CartContainer = (props) => {
       </div>
       <div id="cart-content">
         {
-          (props.cart.length === 0) ? <h1>Your Cart is empy</h1> : <CartDetail cart={props.cart} />
+          (props.cart.length === 0) ? <h1>Your Cart Is Empty</h1> : <CartDetail cart={props.cart} />
         }
         <OrderDetailsSidebar />
       </div>

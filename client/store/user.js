@@ -14,8 +14,6 @@ const CLEAR_CART = 'CLEAR_CART'
 
 const IS_LOADING = 'IS_LOADING'
 const LOADING_FINISH = 'LOADING_FINISH'
-
-const garden_store = 'garden_store'
 /**
  * INITIAL STATE
  */
@@ -104,20 +102,25 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    if (user) {
+    if (Object.keys(user.user).length > 0) {
       const res = await axios.post('/api/cart', {
         item: newItem,
         userId: user.id
       })
     }
     dispatch(addItemToCart(newItem))
-    let localCart = JSON.parse(localStorage.getItem(garden_store))
+    let localCart = JSON.parse(localStorage.getItem("garden_store"))
     if (localCart) {
-      localCart = {...localCart, [newItem.id]: newItem}
+      if (Object.keys(localCart).indexOf(newItem.id.toString()) > -1) {
+        console.log('if worked');
+        localCart = {...localCart, [newItem.id]: {...item, quantity: quantity + newItem.quantity}}
+      }
+      else localCart = {...localCart, [newItem.id]: newItem}
     } else {
       localCart = newItem
     }
-    localStorage.setItem(garden_store, JSON.stringify(garden_store, localCart))
+    localStorage.setItem("garden_store", JSON.stringify(localCart))
+    console.log(localCart);
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
