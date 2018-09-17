@@ -204,18 +204,32 @@ export const submitCheckoutThunk = user => async dispatch => {
 export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
   try {
     dispatch(isLoading())
+    console.group("--get order history--")
+    console.log("Order ID: ", orderId)
+    console.log("User ID: ", userId)
+    console.groupEnd()
     let res
+    let data
     if (orderId) {
-      res = await axios.get(`/orders/${orderId}`)
+      console.log("Order ID: ", orderId)
+      res = await axios.get(`api/orders/${orderId}`)
+      data = res.data
+      console.log("With the User ID, get order history: ", data)
     } else {
       if (userId) {
-        res = await axios.get(`/users/${userId}`)
-        res = res.data
-      } else {
-        res = []
+        console.log("User ID: ", userId)
+        res = await axios.get(`api/users/${userId}/order`)
+        data = res.data
+        console.log("With the Order ID, get order history: ", data)
       }
     }
-    dispatch(getOrderHistory(res))
+    if(data){
+      data = [data]
+    } else {
+      data = []
+    }
+    // console.log("Thunk get order history: ", data)
+    dispatch(getOrderHistory(data))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)

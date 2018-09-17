@@ -16,18 +16,24 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId/order', async (req, res, next) => {
+  // console.log("**********User order history hit!***********")
   try {
     const sessionId = req.user.id
     const userId = req.params.userId
-    if (sessionId === userId) {
+    // console.log(userId)
+    // console.log(sessionId)
+    if (sessionId == userId) {
       const orderHistory = await Order.findAll({
         where: {
-          userId: 3
+          userId: userId
         },
         include: [{model: Order_Detail}]
       })
       res.status(200).json(orderHistory)
+    } else {
+      res.status(200).json({data:[]})
+      // console.log("return empty")
     }
   } catch (err) {
     next(err)
