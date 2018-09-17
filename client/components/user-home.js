@@ -11,7 +11,6 @@ export const UserHome = props => {
   const {email, products, isLoggedIn} = props
   return (
     <div>
-      {isLoggedIn ? <h3>Welcome, {email}</h3> : null}
       {products.map(item => {
         return (
           <SimpleCard
