@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {Panel, Image} from 'react-bootstrap'
-import "./components-style/simple-card.css"
 
 export default class simpleCard extends Component {
   render() {
