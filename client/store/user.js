@@ -11,6 +11,7 @@ const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART'
 const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
 const CLEAR_CART = 'CLEAR_CART'
+const SET_CART = 'SET_CART'
 
 const IS_LOADING = 'IS_LOADING'
 const LOADING_FINISH = 'LOADING_FINISH'
@@ -44,6 +45,12 @@ const loadingFinish = () => ({type: LOADING_FINISH})
 const clearCart = () => {
   localStorage.clear("garden_store")
   return {type: CLEAR_CART}
+}
+const setCart = cart => {
+  return {
+    type: SET_CART,
+    cart
+  }
 }
 
 /**
@@ -98,6 +105,21 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const getCart = (user) => {
+  return async dispatch => {
+    if (Object.keys(user.user).length > 0) {
+      const { data } = await axios.get(`/api/cart/${user.id}`);
+      console.log(data);
+      dispatch(setCart(data));
+    }
+    else {
+      const cart = localStorage.getItem("garden_store");
+      console.log(cart);
+      dispatch(setCart(cart));
+    }
+  }
+}
+
 export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
@@ -111,18 +133,21 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
     dispatch(addItemToCart(newItem))
     let localCart = JSON.parse(localStorage.getItem("garden_store"))
     if (localCart) {
-      if (Object.keys(localCart).indexOf(newItem.id.toString()) > -1) {
+      let itemFound = false;
+      console.log(localCart.length);
+      if (localCart.id == newItem.id) {
         console.log('item exists in local cart already');
-        localCart = {...localCart, [newItem.id]: {...item, quantity: localCart[newItem.id].quantity + newItem.quantity}}
+        itemFound = true;
+        localCart = [...localCart, {...item, quantity: localCart[i].quantity + newItem.quantity}]
         localStorage.setItem("garden_store", JSON.stringify(localCart));
       }
-      else {
+      if (itemFound === false) {
         console.log('local Cart exists, but item does not');
-        localCart = {...localCart, [newItem.id]: newItem}
+        localCart = [...localCart, {...newItem}]
       }
     } else {
       console.log('local cart does not exist');
-      localCart = {[newItem.id]: newItem}
+      localCart = [{...newItem}]
     }
     localStorage.setItem("garden_store", JSON.stringify(localCart))
     console.log('current local cart', localCart);
