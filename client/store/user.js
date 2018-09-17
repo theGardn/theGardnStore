@@ -117,7 +117,7 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
     } else {
       localCart = newItem
     }
-    localStorage.setItem(JSON.stringify(garden_store, localCart))
+    localStorage.setItem(garden_store, JSON.stringify(garden_store, localCart))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -164,7 +164,7 @@ export const removeItemFromCartThunk = (item, user) => async dispatch => {
         return innerItem.id !== item.id
       })
     }
-    localStorage.setItem(JSON.stringify(garden_store, localCart))
+    localStorage.setItem(garden_store, JSON.stringify(garden_store, localCart))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -235,7 +235,7 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case ADD_ITEM_TO_CART:
-      return {...state, cart: [...cart, action.item]}
+      return {...state, cart: [...state.cart, action.item]}
     case REMOVE_ITEM_FROM_CART:
       newCart = cart.filter(item => {
         return item.id != action.item.id

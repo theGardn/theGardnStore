@@ -1,9 +1,10 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel } from 'react-bootstrap'
+import {withRouter} from 'react-router-dom'
 
 
-export default class OrderHistoryCard extends Component {
+class OrderHistoryCard extends Component {
     constructor(props){
         super(props)
     }
@@ -53,3 +54,6 @@ export default class OrderHistoryCard extends Component {
         )
     }
 }
+
+
+export default withRouter(OrderHistoryCard)

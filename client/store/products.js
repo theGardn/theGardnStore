@@ -24,6 +24,7 @@ const getItems = items => {
 }
 
 export const setItem = itemId => {
+  // console.log("--Set Item--")
   return {
     type: SET_ITEM,
     itemId
@@ -50,7 +51,7 @@ export default (state = initialState, action) => {
     case GET_ITEMS:
       return {...state, allItems: action.items, isLoading: false}
     case SET_ITEM:
-      const item = state.allItems.filter(item => item.id == action.itemId)
+      const [ item ] = state.allItems.filter(item => item.id == action.itemId)
       return {...state, currentItem: item}
     default:
       return state
