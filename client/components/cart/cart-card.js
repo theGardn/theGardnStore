@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   Panel,
   Image,
@@ -8,8 +8,8 @@ import {
   Button,
   InputGroup
 } from 'react-bootstrap'
-import {connect} from 'react-redux'
-import {updateItemInCartThunk} from '../../store/user'
+import { connect } from 'react-redux'
+import { updateItemInCartThunk, removeItemFromCartThunk } from '../../store/user'
 
 class CartCard extends Component {
   constructor() {
@@ -19,6 +19,7 @@ class CartCard extends Component {
     }
     this.handleQtyChange = this.handleQtyChange.bind(this)
     this.handleQtyUpdate = this.handleQtyUpdate.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   handleQtyChange(evt) {
@@ -27,14 +28,20 @@ class CartCard extends Component {
     })
   }
 
+  async handleDelete() {
+    const { item, user } = this.props
+    await this.props.removeItem(item, user)
+
+  }
+
   async handleQtyUpdate() {
-    const {item, user} = this.props
+    const { item, user } = this.props
     const qty = this.state.value
     await this.props.updateQty(item, qty, user)
   }
 
   render() {
-    const {id, name, price, imageUrl} = this.props.item
+    const { id, name, price, imageUrl } = this.props.item
     return (
       <Panel id="cart-card">
         <Panel.Body>
@@ -72,7 +79,7 @@ class CartCard extends Component {
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
-              <Button bsStyle="danger">Delete</Button>
+              <Button bsStyle="danger" onClick={this.handleDelete}>Delete</Button>
             </div>
           </div>
         </Panel.Body>
@@ -90,7 +97,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     updateQty: (item, quantity, user) =>
-      dispatch(updateItemInCartThunk(item, quantity, user))
+      dispatch(updateItemInCartThunk(item, quantity, user)),
+    removeItem: (item, user) => dispatch(removeItemFromCartThunk(item, user))
   }
 }
 
