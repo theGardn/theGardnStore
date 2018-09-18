@@ -59,3 +59,22 @@ form div {
 .singleProductPic {
   height: 30vw;
 }
+
+#searchBar {
+  margin-top: -4vh;
+  margin-left: 70vw;
+}
+
+@media only screen and (max-width: 990px) {
+  #searchBar {
+    margin-top: 25vh;
+    margin-left: 65vw;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #searchBar {
+    margin-top: 62vh;
+    margin-left: 35vw;
+  }
+}
