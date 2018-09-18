@@ -12,7 +12,7 @@ const UPDATE_ITEM_IN_CART = 'UPDATE_ITEM_IN_CART'
 const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
 const CLEAR_CART = 'CLEAR_CART'
 const SET_CART = 'SET_CART'
-
+const APPLY_PROMO = 'APPLY_PROMO'
 const IS_LOADING = 'IS_LOADING'
 const LOADING_FINISH = 'LOADING_FINISH'
 /**
@@ -50,6 +50,18 @@ const setCart = cart => {
   return {
     type: SET_CART,
     cart
+  }
+}
+
+export const applyPromo = (cart, code) => {
+  if (code && code === 'dakotasbeardtrimmings') {
+    const newCart = cart.map(item => {
+      return {...item, price: item.price / 2}
+    })
+    return {
+      type: APPLY_PROMO,
+      cart: newCart
+    }
   }
 }
 
@@ -117,7 +129,12 @@ export const getCart = (user) => {
         const detailObj = cartArr[i];
         const productObj = detailObj.product
         for(let key in productObj) {
-          detailObj[key] = productObj[key]
+          if (key === 'quantity') {
+            detailObj['quantityLeft'] = productObj[key]
+          }
+          else {
+            detailObj[key] = productObj[key]
+          }
         }
       }
       console.log(cartArr);
@@ -273,7 +290,7 @@ export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
       }
     }
 
-    
+
     if(data[0] == null || !data){
       data = []
     }
@@ -322,6 +339,11 @@ export default function(state = defaultUser, action) {
       return {...state, orderHistory: action.orderHistory}
     case SET_CART:
       return {...state, cart: action.cart}
+    case APPLY_PROMO:
+      if (!action.cart) {
+        return null;
+      }
+      else return {...state, cart: action.cart}
     default:
       return state
   }

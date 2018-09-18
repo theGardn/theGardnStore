@@ -1,0 +1,28 @@
+#order-detail-total-number {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+#order-detail-total {
+  padding-left: 10px;
+}
+
+#order-detail-sidebar-total {
+  margin-bottom: 20px;
+}
+
+#order-details-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+

@@ -56,8 +56,8 @@ class SingleProductCard extends React.Component {
                       <label htmlFor="addQuantity">Purchase: </label>
                       <input
                         type="text"
+                        name="quantity"
                         className="addQuantity"
-                        placeholder="Enter quantity you want"
                         onChange={this.handleQuantityChange}
                         value={this.state.quantity}
                       />

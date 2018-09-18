@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import OrderDetailsSidebar from './order-detail-sidebar'
-import {submitCheckoutThunk} from '../store/user'
-import { Panel, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap'
+import {submitCheckoutThunk, applyPromo} from '../store/user'
+import { Panel, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Button, Form } from 'react-bootstrap'
 import "./components-style/checkout-page.css"
 
 const mapStateToProps = state => {
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitCheckout: user => dispatch(submitCheckoutThunk(user))
+    submitCheckout: user => dispatch(submitCheckoutThunk(user)),
+    applyPromoCode: (cart, code) => dispatch(applyPromo(cart, code))
   }
 }
 
@@ -30,9 +31,12 @@ class CheckoutPage extends Component {
       creditCardNumber: '',
       cvc: '',
       expyMonth: '',
-      expyYear: ''
+      expyYear: '',
+      promo: '',
+      promoApplied: false
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handlePromo = this.handlePromo.bind(this)
   }
 
   handleChange (event) {
@@ -44,15 +48,22 @@ class CheckoutPage extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    const {firstName, lastName, email, creditCardNumber, cvc, expyMonth, expyYear} = event.target;
+    const {firstName, lastName, email, creditCardNumber, cvc, expyMonth, expyYear, promo} = event.target;
+
+    if (promo.length)
 
     console.log(firstName.value, lastName.value, email.value, creditCardNumber.value, cvc.value, expyMonth.value, expyYear.value);
   }
 
+  handlePromo () {
+    this.props.applyPromoCode(this.props.cart, this.state.promo)
+    this.setState({ promoApplied: true })
+  }
+
   render () {
-    const { submitCheckout, user, cart } = this.props;
+    const { submitCheckout, applyPromoCode, user, cart } = this.props;
     const {handleChange} = this;
-    const { firstName, lastName, email, creditCardNumber, cvc, expyMonth, expyYear } = this.state;
+    const { firstName, lastName, email, creditCardNumber, cvc, expyMonth, expyYear, promo } = this.state;
 
     return (
       <div id='checkout-container'>
@@ -187,6 +198,24 @@ class CheckoutPage extends Component {
                         <option value="2029">2029</option>
                       </FormControl>
                     </FormGroup>
+                    <Form inline>
+                      <FormGroup
+                        controlId="formControlsPromo"
+                        className="form-group"
+                        id='promo-input'
+                      >
+                        <ControlLabel>APPLY PROMO CODE</ControlLabel>{'  '}
+                        <FormControl
+                          type='text'
+                          value={promo}
+                          name='promo'
+                          placeholder='Enter Promo Code Here'
+                          onChange={handleChange}
+                        />{'  '}
+                        <Button bsStyle="success" onClick={this.handlePromo}>APPLY</Button>
+                        <FormControl.Static id="promo-message">{this.state.promoApplied ? "Everything is 50% Off! Thanks, Dakota!" : null}</FormControl.Static>
+                      </FormGroup>
+                    </Form>
                     <Button bsStyle="success" type="submit" id="submit-order-button">
                       SUBMIT ORDER
                     </Button>
@@ -196,7 +225,7 @@ class CheckoutPage extends Component {
             </Col>
             <Col xs={12} sm={4}>
               <div id="checkout-page-order-details">
-                <OrderDetailsSidebar/>
+                <OrderDetailsSidebar hideButton={true}/>
               </div>
             </Col>
           </div>
