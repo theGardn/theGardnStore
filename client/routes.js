@@ -8,6 +8,7 @@ import AllProducts from './components/all-products'
 import Categories from './components/categories'
 import ProductDetail from './components/productDetail'
 import {me} from './store'
+import {getCart} from './store/user'
 import CheckoutPage from './components/checkout-page'
 import OrderHistory from './components/orderHistory'
 /**
@@ -59,8 +60,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
-      dispatch(me())
+    async loadInitialData() {
+      const user = await dispatch(me())
+      console.log('userInLoadInitialData', user);
+      dispatch(getCart(user))
     }
   }
 }

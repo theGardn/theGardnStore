@@ -60,9 +60,11 @@ export const me = () => async dispatch => {
   try {
     dispatch(isLoading())
     const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
+    const user = res.data || defaultUser.user
+    dispatch(getUser(user))
     console.log('me logged in')
     dispatch(loadingFinish())
+    return user;
   } catch (err) {
     console.error(err)
     dispatch(loadingFinish())
@@ -107,15 +109,27 @@ export const logout = () => async dispatch => {
 
 export const getCart = (user) => {
   return async dispatch => {
-    if (Object.keys(user.user).length > 0) {
+    console.log('user', user.id);
+    if (user.id && Object.keys(user).length > 0) {
       const { data } = await axios.get(`/api/cart/${user.id}`);
-      console.log(data);
-      dispatch(setCart(data));
+      const cartArr = data.order_details
+      for(let i = 0; i < cartArr.length; i++) {
+        const detailObj = cartArr[i];
+        const productObj = detailObj.product
+        for(let key in productObj) {
+          detailObj[key] = productObj[key]
+        }
+      }
+      console.log(cartArr);
+      dispatch(setCart(cartArr));
     }
     else {
-      const cart = localStorage.getItem("garden_store");
-      console.log(cart);
-      dispatch(setCart(cart));
+      let cart = localStorage.getItem("garden_store");
+      if (cart === null) {
+        cart = []
+      }
+      console.log('notloggedincart', cart);
+      dispatch(setCart(JSON.parse(cart)));
     }
   }
 }
@@ -124,33 +138,38 @@ export const addItemToCartThunk = (item, quantity, user) => async dispatch => {
   try {
     const newItem = {...item, quantity: quantity}
     dispatch(isLoading())
-    if (Object.keys(user.user).length > 0) {
+    console.log('additemuser', user);
+    if (user && user.id) {
       const res = await axios.post('/api/cart', {
         item: newItem,
         userId: user.id
       })
     }
-    dispatch(addItemToCart(newItem))
-    let localCart = JSON.parse(localStorage.getItem("garden_store"))
-    if (localCart) {
+    else {
+      let localCart = JSON.parse(localStorage.getItem("garden_store"))
       let itemFound = false;
-      console.log(localCart.length);
-      if (localCart.id == newItem.id) {
+      if (localCart) {
         console.log('item exists in local cart already');
-        itemFound = true;
-        localCart = [...localCart, {...item, quantity: localCart[i].quantity + newItem.quantity}]
-        localStorage.setItem("garden_store", JSON.stringify(localCart));
+        for (let i = 0; i < localCart.length; i++) {
+          if (localCart[i].id == newItem.id) {
+            itemFound = true;
+            localCart.splice(i, 1, {...item, quantity: localCart[i].quantity + newItem.quantity});
+            localStorage.setItem("garden_store", JSON.stringify(localCart));
+          }
+        }
+        console.log(itemFound);
+        if (itemFound === false) {
+          console.log('local Cart exists, but item does not');
+          localCart = [...localCart, {...newItem}]
+        }
+      } else {
+        console.log('local cart does not exist');
+        localCart = [{...newItem}]
       }
-      if (itemFound === false) {
-        console.log('local Cart exists, but item does not');
-        localCart = [...localCart, {...newItem}]
-      }
-    } else {
-      console.log('local cart does not exist');
-      localCart = [{...newItem}]
+      localStorage.setItem("garden_store", JSON.stringify(localCart))
+      console.log('current local cart', localCart);
     }
-    localStorage.setItem("garden_store", JSON.stringify(localCart))
-    console.log('current local cart', localCart);
+    dispatch(addItemToCart(newItem))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -284,7 +303,7 @@ export default function(state = defaultUser, action) {
     case ADD_ITEM_TO_CART:
       return {...state, cart: [...state.cart, action.item]}
     case REMOVE_ITEM_FROM_CART:
-      newCart = cart.filter(item => {
+      newCart = state.cart.filter(item => {
         return item.id != action.item.id
       })
       return {...state, cart: newCart}
@@ -301,6 +320,8 @@ export default function(state = defaultUser, action) {
       return {...state, cart: []}
     case GET_ORDER_HISTORY:
       return {...state, orderHistory: action.orderHistory}
+    case SET_CART:
+      return {...state, cart: action.cart}
     default:
       return state
   }

@@ -4,20 +4,22 @@ import Routes from './routes'
 import {connect} from 'react-redux'
 import {getItemsFromDb} from './store/products'
 import {getCategories} from './store/categories'
+import {getCart} from './store/user'
 import {withRouter} from 'react-router-dom'
 import './components/components-style/app.css';
 
 const mapDispatchToProps = dispatch => {
   return {
     getProducts: () => dispatch(getItemsFromDb()),
-    getCategories: () => dispatch(getCategories())
+    getCategories: () => dispatch(getCategories()),
   }
 }
 
 const mapStateToProps = state => {
-  const {products} = state
+  const {products, user} = state
   return {
-    products: products.allItems
+    products: products.allItems,
+    user: user
   }
 }
 
@@ -26,7 +28,6 @@ class App extends Component {
     try {
       const {getProducts} = this.props
       await getProducts()
-      console.log('thunk run')
     } catch (err) {
       console.error(err)
     }
@@ -34,9 +35,8 @@ class App extends Component {
     try {
       const {getCategories} = this.props
       await getCategories()
-      console.log('thunk run')
     } catch (err) {
-      console.err(err)
+      console.error(err)
     }
   }
 
