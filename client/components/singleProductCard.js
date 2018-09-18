@@ -4,6 +4,7 @@ import {Redirect, Link} from 'react-router-dom'
 import {addItemToCartThunk} from '../store'
 import {Grid, Row, Col, Button, Panel, Image} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
+import history from '../history'
 
 class SingleProductCard extends React.Component {
   constructor(props) {
@@ -19,6 +20,10 @@ class SingleProductCard extends React.Component {
     this.setState({
       [evt.target.name]: evt.target.value
     })
+  }
+
+  handleGoBack(evt){
+    window.history.back()
   }
 
   handleAddItem(evt) {
@@ -62,11 +67,9 @@ class SingleProductCard extends React.Component {
                       </Button>
                       </div>
                       <div>
-                      <Link to={`/category/1`}>
-                        <Button bsStyle="primary">
+                        <Button bsStyle="primary" onClick={this.handleGoBack}>
                           Back To List
                         </Button>
-                      </Link>
                       </div>
                     </div>
                   </form>
