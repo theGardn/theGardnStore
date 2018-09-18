@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {addItemToCartThunk} from '../store'
 import {Grid, Row, Col, Button, Panel, Image} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
@@ -39,7 +39,7 @@ class SingleProductCard extends React.Component {
             <Grid>
               <Row className="singleProduct">
                 <Col md={6}>
-                  <Image src={currentItem.imageUrl} thumbnail />
+                  <Image src={currentItem.imageUrl} className='singleProductPic' thumbnail />
                 </Col>
 
                 <Col md={6}>
@@ -56,9 +56,18 @@ class SingleProductCard extends React.Component {
                         onChange={this.handleQuantityChange}
                         value={this.state.quantity}
                       />
-                      <Button bsStyle="primary" onClick={this.handleAddItem}>
+                      <div>
+                        <Button bsStyle="primary" onClick={this.handleAddItem}>
                         Add to Cart
                       </Button>
+                      </div>
+                      <div>
+                      <Link to={`/category/1`}>
+                        <Button bsStyle="primary">
+                          Back To List
+                        </Button>
+                      </Link>
+                      </div>
                     </div>
                   </form>
                 </Col>
