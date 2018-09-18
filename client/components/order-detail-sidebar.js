@@ -1,11 +1,11 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Panel, Button, Table} from 'react-bootstrap'
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux'
+import { Panel, Button, Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 import "./components-style/order-detail-sidebar.css";
 
 const mapStateToProps = state => {
-  const {user} = state
+  const { user } = state
   return {
     cart: user.cart
   }
@@ -20,7 +20,7 @@ function calculateTotal(cart) {
 }
 
 const OrderDetailsSidebar = props => {
-  const {cart, handleCheckout, hideButton} = props
+  const { cart, handleCheckout, hideButton } = props
   return (
     <div id="sidebar-container">
       <Panel>
