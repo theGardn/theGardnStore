@@ -8,7 +8,7 @@
 }
 
 #cart-card {
-  width: 450px;
+  width: 500px;
 }
 
 #cart-card > div {
@@ -52,7 +52,7 @@
 }
 
 #card-qty-delete > div > span {
-  width: 55%;
+  width: 80%;
 }
 
 #card-update {
