@@ -37,6 +37,7 @@ class CheckoutPage extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePromo = this.handlePromo.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange (event) {
@@ -50,8 +51,8 @@ class CheckoutPage extends Component {
     event.preventDefault();
     const {firstName, lastName, email, creditCardNumber, cvc, expyMonth, expyYear, promo} = event.target;
 
-    if (promo.length)
-
+    const {submitCheckout, user} = this.props;
+    submitCheckout(user);
     console.log(firstName.value, lastName.value, email.value, creditCardNumber.value, cvc.value, expyMonth.value, expyYear.value);
   }
 
