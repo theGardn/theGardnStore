@@ -17,11 +17,6 @@
 
 //   const initialState = {user: {}}
 
-//   beforeEach(() => {
-//     mockAxios = new MockAdapter(axios)
-//     store = mockStore(initialState)
-//   })
-
 //   afterEach(() => {
 //     mockAxios.restore()
 //     store.clearActions()
