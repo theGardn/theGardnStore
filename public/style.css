@@ -103,3 +103,7 @@ form div {
     margin-top: 35vh;
   }
 }
+
+#all-products-container {
+  margin: 0 auto;
+}

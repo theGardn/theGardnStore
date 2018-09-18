@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import SimpleCard from './simple-card'
 import {withRouter} from 'react-router-dom'
 import {setItem} from '../store/products'
-import "./components-style/all-products.css"
 import {Grid, Row, Col} from 'react-bootstrap';
 
 export const AllProducts = props => {
