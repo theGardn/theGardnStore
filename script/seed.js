@@ -49,12 +49,12 @@ async function seed() {
 
   const categories = await Promise.all([
     Category.create({
-      name: 'fruit',
+      name: 'Fruit',
       imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Culinary_fruits_front_view.jpg/440px-Culinary_fruits_front_view.jpg'
     }),
     Category.create({
-      name: 'vegetable',
+      name: 'Vegetables',
       imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Marketvegetables.jpg/440px-Marketvegetables.jpg'
     })

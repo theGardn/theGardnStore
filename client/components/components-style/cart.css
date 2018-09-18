@@ -59,3 +59,7 @@
   color: #4cae4c;
   border-color: #4cae4c;
 }
+
+#order-details-sidebar-container {
+  margin-top: 60px;
+}
