@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Panel, Button} from 'react-bootstrap'
+import {Link} from 'react-router-dom';
 
 const mapStateToProps = state => {
   const {user} = state
@@ -29,7 +30,7 @@ const OrderDetailsSidebar = props => {
           <div id="order-detail-sidebar-item-list">
             {cart.map(item => {
               return (
-                <div>
+                <div key={item.name}>
                   <p>{item.name}</p>
                 </div>
               )
@@ -38,9 +39,11 @@ const OrderDetailsSidebar = props => {
           <div id="order-detail-sidebar-total">
             <h3 id="order-detail-total">${calculateTotal(cart)}</h3>
           </div>
-          <Button bsStyle="success" onClick={handleCheckout}>
-            PROCEED TO CHECKOUT
-          </Button>
+          <Link to="/checkout">
+            <Button bsStyle="success" onClick={handleCheckout}>
+              PROCEED TO CHECKOUT
+            </Button>
+          </Link>
         </Panel.Body>
       </Panel>
     </div>
