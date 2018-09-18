@@ -15,10 +15,7 @@ const Order = db.define('order', {
   },
   orderId: {
     type: Sequelize.STRING,
-    defaultValue: generateOrderId(),
-    get() {
-      return () => this.getDataValue('orderId')
-    }
+    defaultValue: generateOrderId()
   },
   salt: {
     type: Sequelize.STRING,
@@ -42,7 +39,7 @@ Order.encryptOrderId = function (plainText, salt) {
 
 const setSaltAndOrderId = order => {
   order.salt = Order.generateSalt()
-  order.orderId = Order.encryptOrderId(order.orderId(), order.salt())
+  order.orderId = Order.encryptOrderId(order.orderId, order.salt())
 }
 
 Order.beforeCreate(setSaltAndOrderId)
