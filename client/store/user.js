@@ -245,17 +245,19 @@ export const removeItemFromCartThunk = (item, user) => async dispatch => {
 
 // post '/api/checkout'  for guest
 // put '/api/checkout'
-export const submitCheckoutThunk = user => async dispatch => {
+export const submitCheckoutThunk = (user) => async dispatch => {
   try {
     dispatch(isLoading())
     let res
-    if (user) {
-      res = await axios.put('/api/checkout', { userId: user.id })
+    console.log('user', user);
+    if (user.id) {
+      console.log('condition hit');
+      res = await axios.put('/api/checkout', { userId: user.id})
     } else {
       let localCart = JSON.parse(localStorage.getItem("garden_store"))
       if (localCart) {
         res = await axios.post('/api/checkout', {
-          item: localCart,
+          cart: localCart,
           userId: null
         })
       }

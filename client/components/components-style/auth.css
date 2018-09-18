@@ -1,0 +1,31 @@
+#login-button {
+  width: 100%;
+}
+
+#auth-container {
+  margin-top: 200px;
+}
+
+.blue {
+  color: blue;
+}
+
+.yellow {
+  color: yellow;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+#google-o-auth-link {
+  font-size: 25px;
+}
+
+#OR {
+  font-size: 20px;
+}

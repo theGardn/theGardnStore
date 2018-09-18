@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {withRouter} from 'react-router-dom'
+import {Panel, Grid, Row, Col, Button} from 'react-bootstrap';
+import "./components-style/auth.css"
 
 /**
  * COMPONENT
@@ -11,26 +13,39 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+    <div id="auth-container">
+        <Grid>
+          <Row>
+            <Col xs={12} sm={8} smOffset={2}>
+              <Panel>
+              <Panel.Heading><h1 id='login-title'>ENTER LOGIN INFO</h1></Panel.Heading>
+              <Panel.Body>
+                <form onSubmit={handleSubmit} name={name}>
+                  <div className="form-group">
+                    <label htmlFor="email">
+                      EMAIL
+                    </label>
+                    <input name="email" type="text" className="form-control"/>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">
+                      PASSWORD
+                    </label>
+                    <input name="password" type="password" className="form-control"/>
+                  </div>
+                  <div className="form-group">
+                    <Button bsStyle="success" type="submit" id="login-button">{displayName.toUpperCase()}</Button>
+                  </div>
+                  {error && error.response && <div> {error.response.data} </div>}
+                  <h5 id="OR">OR</h5>
+                </form>
+                <hr/>
+                <a href="/auth/google" id="google-o-auth-link">{displayName.toUpperCase()} WITH <span className="blue">G</span><span className="red">O</span><span className="yellow">O</span><span className="blue">G</span><span className="green">L</span><span className="red">E</span></a>
+              </Panel.Body>
+              </Panel>
+            </Col>
+          </Row>
+        </Grid>
     </div>
   )
 }

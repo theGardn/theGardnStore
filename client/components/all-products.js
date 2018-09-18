@@ -3,27 +3,37 @@ import {connect} from 'react-redux'
 import SimpleCard from './simple-card'
 import {withRouter} from 'react-router-dom'
 import {setItem} from '../store/products'
+import "./components-style/all-products.css"
+import {Grid, Row, Col} from 'react-bootstrap';
 
 export const AllProducts = props => {
   const {products, setCurrentItem} = props
   return (
-    <React.Fragment>
-      {products.map(item => {
-        if (item.categoryId === Number(props.match.params.id)) {
-          return (
-            <SimpleCard
-              key={item.id}
-              name={item.name}
-              imageUrl={item.imageUrl}
-              price={item.price}
-              id={item.id}
-              onClick={setCurrentItem(item.id)}
-              className="simple_product_card"
-            />
-          )
-        }
-      })}
-    </React.Fragment>
+    <div id="all-products-container">
+      <Grid>
+        <Row>
+          {products.map(item => {
+            if (item.categoryId === Number(props.match.params.id)) {
+              return (
+                <Col xs={6} sm={3}>
+                  <div>
+                  <SimpleCard
+                    key={item.id}
+                    name={item.name}
+                    imageUrl={item.imageUrl}
+                    price={item.price}
+                    id={item.id}
+                    onClick={setCurrentItem(item.id)}
+                  />
+                  </div>
+                </Col>
+              )
+            }
+          })}
+
+        </Row>
+      </Grid>
+    </div>
   )
 }
 
