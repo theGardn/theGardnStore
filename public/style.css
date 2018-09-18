@@ -70,11 +70,17 @@ form div {
     margin-top: 25vh;
     margin-left: 65vw;
   }
+  .singleProductPic {
+    margin-top: 5vh;
+  }
 }
 
 @media only screen and (max-width: 767px) {
   #searchBar {
     margin-top: 62vh;
     margin-left: 35vw;
+  }
+  .singleProductPic {
+    margin-top: 35vh;
   }
 }
