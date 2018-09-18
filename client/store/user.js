@@ -170,13 +170,13 @@ export const updateItemInCartThunk = (
       const res = await axios.put('/api/cart', {item: newItem, userId: user.id})
     }
     dispatch(updateItemInCart(res.data))
-    let localCart = JSON.parse(localStorage.getItem(garden_store))
+    let localCart = JSON.parse(localStorage.getItem("garden_store"))
     if (localCart) {
       localCart[newItem.id] = newItem
     } else {
       localCart = newItem
     }
-    localStorage.setItem(garden_store, JSON.stringify(localCart))
+    localStorage.setItem("garden_store", JSON.stringify(localCart))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -191,13 +191,13 @@ export const removeItemFromCartThunk = (item, user) => async dispatch => {
       const res = await axios.delete('/api/cart', {item: item, userId: user.id})
     }
     dispatch(removeItemFromCart(item))
-    let localCart = JSON.parse(localStorage.getItem(garden_store))
+    let localCart = JSON.parse(localStorage.getItem("garden_store"))
     if (localCart) {
       localCart = localCart.filter(innerItem => {
         return innerItem.id !== item.id
       })
     }
-    localStorage.setItem(garden_store, JSON.stringify(garden_store, localCart))
+    localStorage.setItem("garden_store", JSON.stringify("garden_store", localCart))
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -214,7 +214,7 @@ export const submitCheckoutThunk = user => async dispatch => {
     if (user) {
       res = await axios.put('/api/checkout', {userId: user.id})
     } else {
-      let localCart = JSON.parse(localStorage.getItem(garden_store))
+      let localCart = JSON.parse(localStorage.getItem("garden_store"))
       if (localCart) {
         res = await axios.post('/api/checkout', {
           item: localCart,
@@ -223,7 +223,7 @@ export const submitCheckoutThunk = user => async dispatch => {
       }
     }
     dispatch(clearCart())
-    localStorage.clear(garden_store)
+    localStorage.clear("garden_store")
     dispatch(loadingFinish())
   } catch (err) {
     console.error(err)
@@ -234,28 +234,28 @@ export const submitCheckoutThunk = user => async dispatch => {
 export const getOrderHistoryThunk = (userId, orderId) => async dispatch => {
   try {
     dispatch(isLoading())
-    console.group("--get order history--")
-    console.log("Order ID: ", orderId)
-    console.log("User ID: ", userId)
-    console.groupEnd()
+    // console.group("--get order history--")
+    // console.log("Order ID: ", orderId)
+    // console.log("User ID: ", userId)
+    // console.groupEnd()
     let res
     let data
     if (orderId) {
-      console.log("Order ID: ", orderId)
+      // console.log("Order ID: ", orderId)
       res = await axios.get(`api/orders/${orderId}`)
-      data = res.data
-      console.log("With the User ID, get order history: ", data)
+      data = [res.data]
+      // console.log("With the User ID, get order history: ", data)
     } else {
       if (userId) {
-        console.log("User ID: ", userId)
+        // console.log("User ID: ", userId)
         res = await axios.get(`api/users/${userId}/order`)
         data = res.data
-        console.log("With the Order ID, get order history: ", data)
+        // console.log("With the Order ID, get order history: ", data)
       }
     }
-    if(data){
-      data = [data]
-    } else {
+
+    
+    if(data[0] == null || !data){
       data = []
     }
     // console.log("Thunk get order history: ", data)

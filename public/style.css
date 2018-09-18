@@ -50,3 +50,12 @@ form div {
   flex-direction: column;
   justify-content: center;
 }
+
+.smallPic {
+  height: 30px;
+  width: 30px;
+}
+
+.singleProductPic {
+  height: 30vw;
+}
