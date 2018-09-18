@@ -14,7 +14,7 @@ export const AllProducts = props => {
           {products.map(item => {
             if (item.categoryId === Number(props.match.params.id)) {
               return (
-                <Col xs={6} sm={3}>
+                <Col xs={6} sm={3} className=".simple_product_card">
                   <div>
                   <SimpleCard
                     key={item.id}
@@ -23,7 +23,6 @@ export const AllProducts = props => {
                     price={item.price}
                     id={item.id}
                     onClick={setCurrentItem(item.id)}
-                    className=".simple_product_card"
                   />
                   </div>
                 </Col>
