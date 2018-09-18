@@ -47,7 +47,6 @@ class CartCard extends Component {
   async handleDelete() {
     const { item, user } = this.props
     await this.props.removeItem(item, user)
-
   }
 
   async handleQtyUpdate() {
@@ -105,7 +104,8 @@ class CartCard extends Component {
 
 const mapState = state => {
   return {
-    user: state.user.user
+    user: state.user.user,
+    cart: state.user.cart
   }
 }
 
