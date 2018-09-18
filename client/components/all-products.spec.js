@@ -31,19 +31,19 @@ const products = [
   }
 ]
 
-describe('AllProducts', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(
-      <AllProducts
-        products={products}
-        match={{
-          params: {
-            id: 1
-          }
-        }}
-        setCurrentItem={() => null}
-      />
-    )
-    expect(wrapper.find('.simple_product_card').length).to.be.equal(2)
-  })
-})
+// describe('AllProducts', () => {
+//   it('renders correctly', () => {
+//     const wrapper = shallow(
+//       <AllProducts
+//         products={products}
+//         match={{
+//           params: {
+//             id: 1
+//           }
+//         }}
+//         setCurrentItem={() => null}
+//       />
+//     )
+//     expect(wrapper.find('.simple_product_card').length).to.be.equal(2)
+//   })
+// })
