@@ -11,7 +11,6 @@ const {
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
 
   const users = await Promise.all([
     User.create({
@@ -44,9 +43,6 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-
   const categories = await Promise.all([
     Category.create({
       name: 'Fruit',
@@ -59,9 +55,6 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Marketvegetables.jpg/440px-Marketvegetables.jpg'
     })
   ])
-
-  console.log(`seeded ${categories.length} categories`)
-  console.log(`seeded successfully`)
 
   const products = await Promise.all([
     Product.create({
@@ -146,9 +139,6 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${products.length} products`)
-  console.log(`seeded successfully`)
-
   const orders = await Promise.all([
     Order.create({
       userId: 1,
@@ -165,9 +155,6 @@ async function seed() {
       purchased: false
     })
   ])
-
-  console.log(`seeded ${orders.length} orders`)
-  console.log(`seeded successfully`)
 
   const orderDetails = await Promise.all([
     Order_Detail.create({
@@ -249,16 +236,12 @@ async function seed() {
       orderId: 4
     })
   ])
-
-  console.log(`seeded ${orderDetails.length} order details`)
-  console.log(`seeded successfully`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-  console.log('seeding...')
   try {
     await seed()
   } catch (err) {

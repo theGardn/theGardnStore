@@ -18,6 +18,7 @@ export const AllProducts = props => {
               price={item.price}
               id={item.id}
               onClick={setCurrentItem(item.id)}
+              className="simple_product_card"
             />
           )
         }
