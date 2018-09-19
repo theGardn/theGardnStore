@@ -46,7 +46,7 @@ class SingleProductCard extends React.Component {
       const newQty = existingItem[0].quantity + Number(this.state.quantity)
       this.props.updateItemInCart(existingItem[0], newQty, this.props.user)
     } else {
-      this.props.addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
+      this.props.addItemToCart(this.props.currentItem, Number(this.state.quantity), this.props.user)
     }
   }
 
