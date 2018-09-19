@@ -11,7 +11,6 @@ const {
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
 
   const users = await Promise.all([
     User.create({
@@ -44,28 +43,22 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-
   const categories = await Promise.all([
     Category.create({
-      name: 'fruit',
+      name: 'Fruit',
       imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Culinary_fruits_front_view.jpg/440px-Culinary_fruits_front_view.jpg'
     }),
     Category.create({
-      name: 'vegetable',
+      name: 'Vegetables',
       imageUrl:
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Marketvegetables.jpg/440px-Marketvegetables.jpg'
     })
   ])
 
-  console.log(`seeded ${categories.length} categories`)
-  console.log(`seeded successfully`)
-
   const products = await Promise.all([
     Product.create({
-      name: 'apples',
+      name: 'Apples',
       categoryId: 1,
       price: 1.0,
       quantity: 10,
@@ -73,7 +66,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Honeycrisp.jpg/440px-Honeycrisp.jpg'
     }),
     Product.create({
-      name: 'bananas',
+      name: 'Bananas',
       categoryId: 1,
       price: 0.6,
       quantity: 20,
@@ -81,7 +74,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Banana_and_cross_section.jpg/500px-Banana_and_cross_section.jpg'
     }),
     Product.create({
-      name: 'grapes',
+      name: 'Grapes',
       categoryId: 1,
       price: 1.5,
       quantity: 40,
@@ -89,7 +82,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Abhar-iran.JPG/340px-Abhar-iran.JPG'
     }),
     Product.create({
-      name: 'oranges',
+      name: 'Oranges',
       categoryId: 1,
       price: 2.0,
       quantity: 25,
@@ -97,7 +90,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Orange-Whole-%26-Split.jpg/440px-Orange-Whole-%26-Split.jpg'
     }),
     Product.create({
-      name: 'carrots',
+      name: 'Carrots',
       categoryId: 2,
       price: 1.25,
       quantity: 18,
@@ -105,7 +98,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/7carrots.jpg/250px-7carrots.jpg'
     }),
     Product.create({
-      name: 'tomatoes',
+      name: 'Tomatoes',
       categoryId: 2,
       price: 2.25,
       quantity: 26,
@@ -113,7 +106,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/250px-Tomato_je.jpg'
     }),
     Product.create({
-      name: 'cucumbers',
+      name: 'Cucumbers',
       categoryId: 2,
       price: 3.15,
       quantity: 14,
@@ -121,15 +114,15 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Og%C3%B3rki...jpg/250px-Og%C3%B3rki...jpg'
     }),
     Product.create({
-      name: 'onions',
+      name: 'Onions',
       categoryId: 2,
       price: 2.75,
       quantity: 22,
       imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Garlic.jpg/250px-Garlic.jpg'
+        'https://upload.wikimedia.org/wikipedia/commons/2/25/Onion_on_White.JPG'
     }),
     Product.create({
-      name: 'peppers',
+      name: 'Peppers',
       categoryId: 2,
       price: 3.5,
       quantity: 35,
@@ -137,7 +130,7 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Red_capsicum_and_cross_section.jpg/250px-Red_capsicum_and_cross_section.jpg'
     }),
     Product.create({
-      name: 'lettuce',
+      name: 'Lettuce',
       categoryId: 2,
       price: 1.15,
       quantity: 50,
@@ -145,9 +138,6 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Kropsla_herfst.jpg/250px-Kropsla_herfst.jpg'
     })
   ])
-
-  console.log(`seeded ${products.length} products`)
-  console.log(`seeded successfully`)
 
   const orders = await Promise.all([
     Order.create({
@@ -165,9 +155,6 @@ async function seed() {
       purchased: false
     })
   ])
-
-  console.log(`seeded ${orders.length} orders`)
-  console.log(`seeded successfully`)
 
   const orderDetails = await Promise.all([
     Order_Detail.create({
@@ -249,16 +236,12 @@ async function seed() {
       orderId: 4
     })
   ])
-
-  console.log(`seeded ${orderDetails.length} order details`)
-  console.log(`seeded successfully`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-  console.log('seeding...')
   try {
     await seed()
   } catch (err) {

@@ -8,6 +8,10 @@
   padding-right: 0;
 }
 
+#promo-input {
+  width: 100%;
+}
+
 #cvc-input, #expy-month-input, #expy-year-input {
   width: 15%;
   padding-right: 0
@@ -20,4 +24,11 @@
 
 #checkout-page-content {
   margin-top: 30px;
+}
+
+#promo-message {
+  margin-left: 20px;
+  font-size: 15px;
+  color: red;
+  font-weight: bold;
 }

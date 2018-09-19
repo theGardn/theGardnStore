@@ -1,22 +1,14 @@
 import axios from 'axios'
 
-const GET_ITEMS = 'GET_ITEMS'
-const SET_ITEM = 'SET_ITEM'
-const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST'
+export const GET_ITEMS = 'GET_ITEMS'
+export const SET_ITEM = 'SET_ITEM'
 
 const initialState = {
   currentItem: {},
-  allItems: [],
-  isLoading: true
+  allItems: []
 }
 
-const loading = () => {
-  return {
-    type: GET_ITEMS_REQUEST
-  }
-}
-
-const getItems = items => {
+export const getItems = items => {
   return {
     type: GET_ITEMS,
     items
@@ -33,8 +25,6 @@ export const setItem = itemId => {
 
 export const getItemsFromDb = () => {
   return async dispatch => {
-    console.log('thunk hit')
-    dispatch(loading())
     try {
       const {data} = await axios.get('/api/products')
       dispatch(getItems(data))
@@ -46,12 +36,10 @@ export const getItemsFromDb = () => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ITEMS_REQUEST:
-      return {...state, isLoading: true}
     case GET_ITEMS:
-      return {...state, allItems: action.items, isLoading: false}
+      return {...state, allItems: action.items}
     case SET_ITEM:
-      const [ item ] = state.allItems.filter(item => item.id == action.itemId)
+      const [item] = state.allItems.filter(item => item.id == action.itemId)
       return {...state, currentItem: item}
     default:
       return state

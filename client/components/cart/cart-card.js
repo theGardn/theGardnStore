@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   Panel,
   Image,
@@ -8,35 +8,57 @@ import {
   Button,
   InputGroup
 } from 'react-bootstrap'
-import {connect} from 'react-redux'
-import {updateItemInCartThunk} from '../../store/user'
+import { connect } from 'react-redux'
+import { updateItemInCartThunk, removeItemFromCartThunk } from '../../store/user'
 
 class CartCard extends Component {
   constructor() {
     super()
     this.state = {
-      value: 1
+      value: 0
     }
     this.handleQtyChange = this.handleQtyChange.bind(this)
     this.handleQtyUpdate = this.handleQtyUpdate.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.getValidationState = this.getValidationState.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
-  handleQtyChange(evt) {
+  getValidationState() {
+    const num = this.state.value;
+    if (num < 1) return 'error'
+    return null;
+  }
+
+  componentDidMount() {
+    const { quantity } = this.props.item
     this.setState({
-      value: evt.target.value
+      value: quantity
     })
   }
 
+  handleQtyChange(evt) {
+    const newQty = evt.target.value
+    this.setState({
+      value: newQty
+    })
+  }
+
+  async handleDelete() {
+    const { item, user } = this.props
+    await this.props.removeItem(item, user)
+  }
+
   async handleQtyUpdate() {
-    const {item, user} = this.props
+    const { item, user } = this.props
     const qty = this.state.value
     await this.props.updateQty(item, qty, user)
   }
 
   render() {
-    const {id, name, price, imageUrl} = this.props.item
+    const { id, name, price, imageUrl } = this.props.item
     return (
-      <Panel id="cart-card">
+      <Panel key={id} id="cart-card" >
         <Panel.Body>
           <div id="cart-img">
             <Image src={imageUrl} rounded />
@@ -50,29 +72,28 @@ class CartCard extends Component {
               </div>
             </div>
             <div id="card-qty-delete">
-              <FormGroup controlId="formControlsSelect">
+              <FormGroup
+                controlId="formValidationWarning"
+                validationState={this.getValidationState()}>
                 <ControlLabel>Update Qty</ControlLabel>
                 <InputGroup>
                   <FormControl
-                    componentClass="select"
-                    placeholder="select"
+                    type="number"
+                    placeholder="#"
                     value={this.state.value}
                     onChange={this.handleQtyChange}
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </FormControl>
+                  />
                   <InputGroup.Button>
-                    <Button id="card-update" onClick={this.handleQtyUpdate}>
-                      Update
+                    {
+                      (this.state.value < 1) ? <Button disabled>Update</Button> : <Button id="card-update" onClick={this.handleQtyUpdate}>
+                        Update
                     </Button>
+                    }
+
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
-              <Button bsStyle="danger">Delete</Button>
+              <Button bsStyle="danger" onClick={this.handleDelete} >Delete</Button>
             </div>
           </div>
         </Panel.Body>
@@ -83,14 +104,16 @@ class CartCard extends Component {
 
 const mapState = state => {
   return {
-    user: state.user.user
+    user: state.user.user,
+    cart: state.user.cart
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     updateQty: (item, quantity, user) =>
-      dispatch(updateItemInCartThunk(item, quantity, user))
+      dispatch(updateItemInCartThunk(item, quantity, user)),
+    removeItem: (item, user) => dispatch(removeItemFromCartThunk(item, user))
   }
 }
 

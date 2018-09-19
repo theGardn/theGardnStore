@@ -1,18 +1,28 @@
 const router = require('express').Router()
-const {Order, Order_Detail} = require('../db/models')
+const { Order, Order_Detail, Product } = require('../db/models')
 module.exports = router
 
 router.get('/:userId', async (req, res, next) => {
   try {
     const sessionId = req.user.id
     const userId = req.params.userId
-    if (sessionId === userId) {
+    if (sessionId == userId) {
       const cartItems = await Order.findOne({
         where: {
           userId: req.user.id,
           purchased: false
         },
-        include: [{model: Order_Detail}]
+        include: [
+          {
+            model: Order_Detail,
+            include: [
+              {
+                model: Product
+              }
+            ]
+
+          }
+        ]
       })
       res.status(200).json(cartItems)
     }
@@ -25,15 +35,15 @@ router.put('/', async (req, res, next) => {
   try {
     const sessionId = req.user.id
     const userId = req.body.userId
-    if (sessionId === userId) {
-      const {quantity, id} = req.body.item
-      const updateQty = await Order_Detail.update(
-        {quantity},
+    if (sessionId == userId) {
+      const { quantity, id } = req.body.item
+      const updateQuantity = await Order_Detail.update(
+        { quantity: quantity },
         {
-          where: {id}
+          where: { id: id }
         }
       )
-      res.status(200).json(updateQty)
+      res.status(200).json(updateQuantity)
     }
   } catch (err) {
     next(err)
@@ -44,16 +54,15 @@ router.post('/', async (req, res, next) => {
   try {
     const sessionId = req.user.id
     const userId = req.body.userId
-    if (sessionId === userId) {
+    if (sessionId == userId) {
       const order = await Order.findOrCreate({
         where: {
           userId: userId,
           purchased: false
         }
       })
-      const {id, quantity, price} = req.body.item
+      const { id, quantity, price } = req.body.item
       const productId = id;
-      console.log(id);
       const orderDetails = await Order_Detail.create({
         productId,
         quantity,
@@ -69,17 +78,18 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/', async (req, res, next) => {
   try {
-    const orderDetailId = req.body.id
+    const orderDetailId = req.body.item.id
     const userId = req.user.id
-    const sessionId = req.body.userId
-    if (sessionId === userId) {
-      const deleteItem = await Order_Detail.destroy({
+    const sessionId = req.body.user.id
+    if (sessionId == userId) {
+      await Order_Detail.destroy({
         where: {
           id: orderDetailId
         }
       })
+      res.status(204).end()
     }
-    res.status(204).end()
+
   } catch (err) {
     next(err)
   }

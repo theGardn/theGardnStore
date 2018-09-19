@@ -5,7 +5,8 @@ module.exports = router
 router.post('/', async (req, res, next) => {
   try {
     const guestOrder = await Order.create()
-    const orderId = guestOrder[0].dataValues.id
+    console.log(guestOrder);
+    const orderId = guestOrder.dataValues.id
     const guestCart = req.body.cart
     guestCart.map(async product => {
       const newOrderDetail = await Order_Detail.create({
