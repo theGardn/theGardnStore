@@ -79,6 +79,29 @@ form div {
   margin-left: 70vw;
 }
 
+#inventoryTab {
+  margin-top: 4vh;
+}
+
+tr:hover { 
+  background: #e5e5e5; 
+}
+
+.rowContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 0px;
+  margin-left: 0px
+}
+#adminUpdateForm {
+  margin-left: 0px;
+}
+
+#tinyBox {
+  padding-left: 0px;
+  margin-left: 0px
+
 #simple-card-name {
   font-size: 15px;
   margin: 0 auto;
@@ -92,6 +115,10 @@ form div {
   .singleProductPic {
     margin-top: 5vh;
   }
+
+  #inventoryTab {
+    margin-top: 26vh;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -102,8 +129,13 @@ form div {
   .singleProductPic {
     margin-top: 35vh;
   }
+
+  #inventoryTab {
+    margin-top: 35vh;
+  }
 }
 
 #all-products-container {
   margin: 0 auto;
 }
+

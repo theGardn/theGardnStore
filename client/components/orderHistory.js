@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, Button } from 'react-bootstrap'
+import {withRouter} from 'react-router-dom'
 
 import { getOrderHistoryThunk } from '../store/user'
 import OrderHistoryCard from './orderHistoryCard'
@@ -46,7 +47,7 @@ class OrderHistory extends Component {
         // console.log("+++++++++++++++++++++")
 
         return (
-            <div>
+            <div id='orderHistoryContainer'>
                 <div id='searchBar'>
                     <form onSubmit={this.handleOrderSearch}>
                         <input placeholder='Enter Your Order Number' onChange={this.handleChange} id='orderHistorySearchbar' value={this.state.searchVal} />
@@ -97,4 +98,4 @@ const mapDispatch = (dispatch) => {
 }
 
 
-export default connect(mapState, mapDispatch)(OrderHistory)
+export default withRouter(connect(mapState, mapDispatch)(OrderHistory))
