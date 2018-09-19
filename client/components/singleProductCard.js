@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import { addItemToCartThunk, updateItemInCartThunk } from '../store'
+
 import { Grid, Row, Col, Button, Panel, Image, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+
 import { withRouter } from 'react-router-dom'
 import history from '../history'
 
@@ -36,6 +38,8 @@ class SingleProductCard extends React.Component {
     window.history.back()
   }
 
+
+
   handleAddItem(evt) {
     evt.preventDefault()
     const { cart, currentItem } = this.props
@@ -46,7 +50,9 @@ class SingleProductCard extends React.Component {
       const newQty = existingItem[0].quantity + Number(this.state.quantity)
       this.props.updateItemInCart(existingItem[0], newQty, this.props.user)
     } else {
+
       this.props.addItemToCart(this.props.currentItem, Number(this.state.quantity), this.props.user)
+
     }
   }
 
@@ -92,9 +98,11 @@ class SingleProductCard extends React.Component {
                         />
                       </FormGroup>
                       <div>
+
                         {
                           (this.state.quantity < 1 || this.state.quantity > currentItem.quantity) ? <Button disabled>Add to Cart</Button> : <Button bsStyle="primary" onClick={this.handleAddItem}>
                             Add to Cart
+
                       </Button>
                         }
                       </div>

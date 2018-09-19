@@ -53,6 +53,7 @@ class CheckoutPage extends Component {
 
     const {submitCheckout, user} = this.props;
     submitCheckout(user);
+    this.props.history.push('/purchaseinfo')
     console.log(firstName.value, lastName.value, email.value, creditCardNumber.value, cvc.value, expyMonth.value, expyYear.value);
   }
 
