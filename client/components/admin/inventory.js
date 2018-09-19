@@ -32,14 +32,6 @@ class Inventory extends Component {
                     <Tab eventKey={2} title='All Products' >
                         <Listing products={products} />
                     </Tab>
-                    <Tab eventKey={3} title='Search by Name' >
-                    <table data-link="row">
-                    <tbody>
-                    <tr onClick={this.tellMeMore} href='/home'><td>This is Foo</td></tr>
-                    <tr><td><a href="bar.html">Bar</a></td><td>Bar is good</td></tr>
-                    </tbody>
-                    </table>
-                    </Tab>
                 </Tabs>
             </div>
         )
@@ -54,13 +46,13 @@ const mapProps = state => {
       user: state.user.user
     }
   }
-  
+
   const mapDispatch = dispatch => {
     return {
-      
+
     }
   }
-  
+
 export default withRouter(connect(mapProps, mapDispatch)(Inventory))
 
 

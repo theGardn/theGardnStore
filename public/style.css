@@ -83,8 +83,8 @@ form div {
   margin-top: 4vh;
 }
 
-tr:hover { 
-  background: #e5e5e5; 
+tr:hover {
+  background: #e5e5e5;
 }
 
 .rowContainer {
@@ -101,6 +101,7 @@ tr:hover {
 #tinyBox {
   padding-left: 0px;
   margin-left: 0px
+}
 
 #simple-card-name {
   font-size: 15px;
