@@ -5,7 +5,7 @@ module.exports = router
 router.get('/:orderId', async (req, res, next) => {
   try {
     const orderId = req.params.orderId
-    const order = await Order.findById(orderId, {
+    const order = await Order.findOne({ where: {orderId: orderId} ,
       include: [{model: Order_Detail}]
     })
     res.status(200).json(order)
