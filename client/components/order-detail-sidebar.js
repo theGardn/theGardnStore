@@ -16,9 +16,10 @@ const mapStateToProps = state => {
 function calculateTotal(cart) {
   let sum = 0
   for (let i = 0; i < cart.length; i++) {
-    sum += (parseInt(cart[i].price) * parseInt(cart[i].quantity))
+    console.log(cart[i].price, cart[i].quantity)
+    sum += (parseFloat(cart[i].price).toFixed(2) * parseFloat(cart[i].quantity).toFixed(2))
   }
-  return sum
+  return sum.toFixed(2)
 }
 
 const OrderDetailsSidebar = props => {
@@ -52,6 +53,7 @@ const OrderDetailsSidebar = props => {
               </tbody>
             </Table>
           </div>
+          {console.log(cart)}
           <div id="order-detail-sidebar-total">
             <p id="order-detail-total">Grand Total: <span id="order-detail-total-number">${calculateTotal(cart)}</span></p>
           </div>
