@@ -10,6 +10,8 @@ import ProductDetail from './components/productDetail'
 import {me} from './store'
 import CheckoutPage from './components/checkout-page'
 import OrderHistory from './components/orderHistory'
+import Inventory from './components/admin/inventory'
+import UpdateInventory from './components/admin/updateItem'
 /**
  * COMPONENT
  */
@@ -33,6 +35,8 @@ class Routes extends Component {
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/checkout" component={CheckoutPage} />
         <Route path="/orders" component={OrderHistory} />
+        <Route path="/admin/inventory/update" component={UpdateInventory} />
+        <Route path="/admin/inventory" component={Inventory} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

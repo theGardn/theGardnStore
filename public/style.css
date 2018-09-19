@@ -65,6 +65,30 @@ form div {
   margin-left: 70vw;
 }
 
+#inventoryTab {
+  margin-top: 4vh;
+}
+
+tr:hover { 
+  background: #e5e5e5; 
+}
+
+.rowContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 0px;
+  margin-left: 0px
+}
+#adminUpdateForm {
+  margin-left: 0px;
+}
+
+#tinyBox {
+  padding-left: 0px;
+  margin-left: 0px
+}
+
 @media only screen and (max-width: 990px) {
   #searchBar {
     margin-top: 25vh;
@@ -72,6 +96,10 @@ form div {
   }
   .singleProductPic {
     margin-top: 5vh;
+  }
+
+  #inventoryTab {
+    margin-top: 26vh;
   }
 }
 
@@ -81,6 +109,10 @@ form div {
     margin-left: 35vw;
   }
   .singleProductPic {
+    margin-top: 35vh;
+  }
+
+  #inventoryTab {
     margin-top: 35vh;
   }
 }
