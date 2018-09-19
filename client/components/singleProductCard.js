@@ -1,9 +1,9 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Redirect, Link} from 'react-router-dom'
-import {addItemToCartThunk} from '../store'
-import {Grid, Row, Col, Button, Panel, Image} from 'react-bootstrap'
-import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Redirect, Link } from 'react-router-dom'
+import { addItemToCartThunk, updateItemInCartThunk } from '../store'
+import { Grid, Row, Col, Button, Panel, Image } from 'react-bootstrap'
+import { withRouter } from 'react-router-dom'
 import history from '../history'
 
 class SingleProductCard extends React.Component {
@@ -22,13 +22,24 @@ class SingleProductCard extends React.Component {
     })
   }
 
-  handleGoBack(evt){
+  handleGoBack(evt) {
     window.history.back()
   }
 
+
+
   handleAddItem(evt) {
     evt.preventDefault()
-    this.props.addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
+    const { cart, currentItem } = this.props
+    const existingItem = cart.filter(item => {
+      return item.name === currentItem.name
+    })
+    if (existingItem.length > 0) {
+      const newQty = existingItem[0].quantity + Number(this.state.quantity)
+      this.props.updateItemInCart(existingItem[0], newQty, this.props.user)
+    } else {
+      this.props.addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
+    }
   }
 
   render() {
@@ -63,7 +74,7 @@ class SingleProductCard extends React.Component {
                       />
                       <div>
                         <Button bsStyle="primary" onClick={this.handleAddItem}>
-                        Add to Cart
+                          Add to Cart
                       </Button>
                       </div>
                       <div>
@@ -87,14 +98,16 @@ class SingleProductCard extends React.Component {
 const mapProps = state => {
   return {
     currentItem: state.products.currentItem,
-    user: state.user.user
+    user: state.user.user,
+    cart: state.user.cart
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     addItemToCart: (item, quantity, user) =>
-      dispatch(addItemToCartThunk(item, quantity, user))
+      dispatch(addItemToCartThunk(item, quantity, user)),
+    updateItemInCart: (item, quantity, user) => dispatch(updateItemInCartThunk(item, quantity, user))
   }
 }
 
