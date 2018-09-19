@@ -33,13 +33,14 @@ class Routes extends Component {
         <Route path="/cart" component={CartContainer} />
         <Route path="/category/:id" component={AllProducts} />
         <Route path="/home" component={Categories} />
+        <Route exact path="/" component={Categories} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/checkout" component={CheckoutPage} />
         <Route path="/orders" component={OrderHistory} />
-        <Route path="/admin/inventory/update" component={UpdateInventory} />
-        <Route path="/admin/inventory" component={Inventory} />
         {isLoggedIn && (
           <Switch>
+          <Route path="/admin/inventory/update" component={UpdateInventory} />
+          <Route path="/admin/inventory" component={Inventory} />
             {/* Routes placed here are only available after logging in */}
           </Switch>
         )}

@@ -14,7 +14,7 @@ class OrderHistoryCard extends Component {
         // console.log(this.props.productDic)
         // console.log(item)
         return (
-            <tr key={item.id}>
+            <tr key={item.d}>
                 <th><Image src={this.props.productDic[item.productId].imageUrl || 'Unknow.png'} rounded className='smallPic' /></th>
                 <th>{this.props.productDic[item.productId].name || 'Unknow'}</th>
                 <th>Quantity: {item.quantity}</th>
@@ -47,7 +47,7 @@ class OrderHistoryCard extends Component {
                         <Table responsive hover>
                             <thead>
                             <tr>
-                            <th>Order#: {order.id}</th>
+                            <th>Order#: {order.orderId}</th>
                             <th>Total Price: ${totalPrice.toFixed(2)} </th>
                             <th>Date: {orderDate}</th>
                             </tr>
