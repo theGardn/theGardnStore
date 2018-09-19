@@ -13,6 +13,7 @@ import CheckoutPage from './components/checkout-page'
 import OrderHistory from './components/orderHistory'
 import Inventory from './components/admin/inventory'
 import UpdateInventory from './components/admin/updateItem'
+import PurchaseInfo from './components/purchaseInfo'
 /**
  * COMPONENT
  */
@@ -37,6 +38,7 @@ class Routes extends Component {
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/checkout" component={CheckoutPage} />
         <Route path="/orders" component={OrderHistory} />
+        <Route path='/purchaseinfo' component={PurchaseInfo} />
         {isLoggedIn && (
           <Switch>
           <Route path="/admin/inventory/update" component={UpdateInventory} />

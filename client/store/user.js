@@ -22,6 +22,7 @@ const defaultUser = {
   user: {},
   cart: [],
   orderHistory: [],
+  orderId: '123456',
   isLoading: false
 }
 
@@ -253,6 +254,7 @@ export const submitCheckoutThunk = (user) => async dispatch => {
     if (user.id) {
       console.log('condition hit');
       res = await axios.put('/api/checkout', { userId: user.id})
+      
     } else {
       let localCart = JSON.parse(localStorage.getItem("garden_store"))
       if (localCart) {
@@ -262,6 +264,8 @@ export const submitCheckoutThunk = (user) => async dispatch => {
         })
       }
     }
+    console.log("+++++++++++Order success!!!!!++++++++++")
+    console.log(res.data)
     dispatch(clearCart())
     localStorage.clear("garden_store")
     dispatch(loadingFinish())
