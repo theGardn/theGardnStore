@@ -203,7 +203,7 @@ export const updateItemInCartThunk = (
     const newItem = { ...item, quantity: quantity }
     dispatch(isLoading())
     if (user) {
-      const res = await axios.put('/api/cart', { item: newItem, userId: user.id })
+      await axios.put('/api/cart', { item: newItem, userId: user.id })
       dispatch(updateItemInCart({ ...item, quantity: quantity }))
     } else {
       let localCart = JSON.parse(localStorage.getItem("garden_store"))
