@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import { addItemToCartThunk, updateItemInCartThunk } from '../store'
-import { Grid, Row, Col, Button, Panel, Image } from 'react-bootstrap'
+import { Grid, Row, Col, Button, Panel, Image, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
 import history from '../history'
 
@@ -14,19 +14,27 @@ class SingleProductCard extends React.Component {
     }
     this.handleQuantityChange = this.handleQuantityChange.bind(this)
     this.handleAddItem = this.handleAddItem.bind(this)
+    this.getValidationState = this.getValidationState.bind(this)
+  }
+
+  getValidationState() {
+    const num = this.state.quantity;
+    const { quantity } = this.props.currentItem
+    if (num < 1) return 'error'
+    if (num > quantity) return 'error'
+    return null;
   }
 
   handleQuantityChange(evt) {
+    const newQty = evt.target.value
     this.setState({
-      [evt.target.name]: evt.target.value
+      quantity: newQty
     })
   }
 
   handleGoBack(evt) {
     window.history.back()
   }
-
-
 
   handleAddItem(evt) {
     evt.preventDefault()
@@ -38,7 +46,7 @@ class SingleProductCard extends React.Component {
       const newQty = existingItem[0].quantity + Number(this.state.quantity)
       this.props.updateItemInCart(existingItem[0], newQty, this.props.user)
     } else {
-      this.props.addItemToCart(this.props.currentItem, this.state.quantity, this.props.user)
+      this.props.addItemToCart(this.props.currentItem, Number(this.state.quantity), this.props.user)
     }
   }
 
@@ -64,18 +72,31 @@ class SingleProductCard extends React.Component {
                     <h3>Price: {currentItem.price}</h3>
                     <h3>In store: {currentItem.quantity}</h3>
                     <div>
-                      <label htmlFor="addQuantity">Purchase: </label>
+                      {/* <label htmlFor="addQuantity">Purchase: </label>
                       <input
                         type="text"
                         name="quantity"
                         className="addQuantity"
                         onChange={this.handleQuantityChange}
                         value={this.state.quantity}
-                      />
+                      /> */}
+                      <FormGroup
+                        controlId="formValidationWarning"
+                        validationState={this.getValidationState()}>
+                        <ControlLabel>Purchase</ControlLabel>
+                        <FormControl
+                          type="number"
+                          placeholder="#"
+                          value={this.state.quanitity}
+                          onChange={this.handleQuantityChange}
+                        />
+                      </FormGroup>
                       <div>
-                        <Button bsStyle="primary" onClick={this.handleAddItem}>
-                          Add to Cart
+                        {
+                          (this.state.quantity < 1 || this.state.quantity > currentItem.quantity) ? <Button disabled>Add to Cart</Button> : <Button bsStyle="primary" onClick={this.handleAddItem}>
+                            Add to Cart
                       </Button>
+                        }
                       </div>
                       <div>
                         <Button bsStyle="primary" onClick={this.handleGoBack}>
